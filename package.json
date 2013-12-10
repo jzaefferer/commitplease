@@ -1,0 +1,30 @@
+{
+  "name": "commitplease",
+  "version": "0.1.0",
+  "description": "Validates strings as commit messages",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules/nodeunit/bin/nodeunit test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jzaefferer/commitplease.git"
+  },
+  "keywords": [
+    "commit",
+    "message",
+    "validation"
+  ],
+  "author": {
+    "name": "Jörn Zaefferer",
+    "url": "http://bassistance.de"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "nodeunit": "~0.8.2",
+    "jshint": "~2.3.0"
+  },
+  "dependencies": {
+    "mout": "~0.8.0"
+  }
+}
