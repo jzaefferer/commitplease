@@ -3,8 +3,6 @@
 
 var pkg = require('./package');
 console.log(pkg.name, pkg.version);
-console.log("cwd\t\t", process.cwd());
-console.log("__dirname\t", __dirname);
 
 (function avoidSelfInstall() {
 	var nameRegex = new RegExp('node_modules/' + pkg.name + '$');
@@ -31,6 +29,7 @@ if (!fs.existsSync(hooks)) {
 }
 
 var name = "commit-msg";
+
 console.log('installing hook', name);
 
 var hook = path.resolve(hooks, name);
@@ -48,5 +47,6 @@ if (fs.existsSync(hook)) {
 
 // Everything is ready for the installation of the pre-commit hook. Write it and
 // make it executable.
-fs.writeFileSync(hook, hookContent);
-fs.chmodSync(hook, '755');
+fs.symlinkSync(path.resolve("./commit-msg-hook.js"), hook);
+// fs.writeFileSync(hook, hookContent);
+// fs.chmodSync(hook, '755');
