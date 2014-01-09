@@ -20,9 +20,9 @@ Just commit as usual. This modules installs a git commit-msg hook, automatically
 
 ```js
 var validate = require('commitplease/lib/validate');
-var errors = commitplease(commit.message);
+var errors = validate(commit.message);
 if (errors.length) {
-	postComment('This commit has ' errors.length + ' problems!');
+	postComment('This commit has ' + errors.length + ' problems!');
 }
 ```
 
