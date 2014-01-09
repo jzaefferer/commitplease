@@ -1,10 +1,10 @@
 {
   "name": "commitplease",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Validates strings as commit messages",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/nodeunit/bin/nodeunit test.js"
+    "install": "node install"
   },
   "repository": {
     "type": "git",
@@ -18,9 +18,6 @@
   "author": {
     "name": "Jörn Zaefferer",
     "url": "http://bassistance.de"
-  },
-  "scripts": {
-    "install": "node install"
   },
   "license": "MIT",
   "devDependencies": {
