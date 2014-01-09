@@ -19,6 +19,9 @@
     "name": "Jörn Zaefferer",
     "url": "http://bassistance.de"
   },
+  "scripts": {
+    "install": "node install"
+  },
   "license": "MIT",
   "devDependencies": {
     "nodeunit": "~0.8.2"
