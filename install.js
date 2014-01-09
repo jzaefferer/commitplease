@@ -33,7 +33,7 @@ var symlink = path.relative(path.resolve(hooks), "./commit-msg-hook.js");
 
 // Check for existing hook
 if ( fs.existsSync( hook ) ) {
-	var stats = fs.lstat( hook );
+	var stats = fs.lstatSync( hook );
 	if ( stats.isSymbolicLink() && fs.readlinkSync( hook ) === symlink ) {
 		console.log( "Found the correct existing symlink, doing nothing" );
 		process.exit(0);
