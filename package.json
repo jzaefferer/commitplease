@@ -21,9 +21,10 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "nodeunit": "~0.8.2"
+    "nodeunit": "0.8.2"
   },
   "dependencies": {
-    "mout": "~0.8.0"
+    "mout": "0.8.0",
+    "colors": "0.6.2"
   }
 }
