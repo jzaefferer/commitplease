@@ -1,6 +1,6 @@
 {
   "name": "commitplease",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Validates strings as commit messages",
   "main": "index.js",
   "scripts": {
