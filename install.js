@@ -48,7 +48,7 @@ if (fs.existsSync(hook)) {
 
 // Everything is ready for the installation of the pre-commit hook. Write it and
 // make it executable.
-console.log(path.relative("./commit-msg-hook.js", root))
-fs.symlinkSync(path.relative("./commit-msg-hook.js", root), hook);
+console.log(path.relative(path.resolve(hooks), "./commit-msg-hook.js"));
+fs.symlinkSync(path.relative(path.resolve(hooks), "./commit-msg-hook.js"), hook);
 // fs.writeFileSync(hook, hookContent);
 // fs.chmodSync(hook, '755');
