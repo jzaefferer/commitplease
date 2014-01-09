@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "install": "node install",
+    "uninstall": "node uninstall",
     "test": "nodeunit test.js"
   },
   "repository": {
