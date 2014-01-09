@@ -2,8 +2,7 @@
 
 [![Build Status](https://secure.travis-ci.org/jzaefferer/commitplease.png)](http://travis-ci.org/jzaefferer/commitplease)
 
-This [node.js](http://nodejs.org/) module takes a string, validates it as a commit message and returns
-a list of problems.
+This [node.js](http://nodejs.org/) module validates git commit messages while you commit.
 
 ## Installation
 
@@ -13,17 +12,21 @@ npm install commitplease
 
 ## Usage
 
+Just commit as usual. This modules installs a git commit-msg hook, automatically validating all commit messages as you enter them. Invalid messages will be rejected, with details on what's wrong and a copy of the input.
+
+## API
+
+*The API is a work-in-progress. Currently there's no way to customize options when using the bundled commit hook.*
+
 ```js
-var commitplease = require('commitplease');
+var validate = require('commitplease/lib/validate');
 var errors = commitplease(commit.message);
 if (errors.length) {
 	postComment('This commit has ' errors.length + ' problems!');
 }
 ```
 
-## API
-
-`commitplease(message[, options])`, returns `Array`
+`validate(message[, options])`, returns `Array`
 
 * `message` (`String`): The commit message to validate. Must use LF (`\n`) as line breaks.
 * `options` (`Object`, optional): Use this to override the default settings, see properties and defaults below
@@ -45,7 +48,7 @@ limits: {
 ```
 
 ## License
-Copyright 2013 Jörn Zaefferer. Released under the terms of the MIT license.
+Copyright 2014 Jörn Zaefferer. Released under the terms of the MIT license.
 
 ---
 
