@@ -28,27 +28,20 @@ if (!fs.existsSync(hooks)) {
 	fs.mkdirSync(hooks);
 }
 
-var name = "commit-msg";
+var hook = path.resolve(hooks, "commit-msg");
+var symlink = path.relative(path.resolve(hooks), "./commit-msg-hook.js");
 
-console.log('installing hook', name);
-
-var hook = path.resolve(hooks, name);
-var hookContent = fs.readFileSync( "./commit-msg-hook.js" );
-
-// If there's an existing `pre-commit` hook we want to back it up instead of
-// overriding it and losing it completely
-if (fs.existsSync(hook)) {
+// Check for existing hook
+if ( fs.existsSync( hook ) ) {
+	var stats = fs.lstat( hook );
+	if ( stats.isSymbolicLink() && fs.readlinkSync( hook ) === symlink ) {
+		console.log( "Found the correct existing symlink, doing nothing" );
+		process.exit(0);
+	}
+	console.log('Detected an existing git commit-msg hook');
 	console.log('');
-	console.log(name + ': Detected an existing git hook');
-	fs.writeFileSync(hook + '.old', fs.readFileSync(hook));
-	fs.unlinkSync(hook);
-	console.log(name + ': Old hook backuped to .old');
-	console.log('');
+	console.log('Remove it and install this package again to install the symlink');
+	process.exit(0);
 }
 
-// Everything is ready for the installation of the pre-commit hook. Write it and
-// make it executable.
-console.log(path.relative(path.resolve(hooks), "./commit-msg-hook.js"));
-fs.symlinkSync(path.relative(path.resolve(hooks), "./commit-msg-hook.js"), hook);
-// fs.writeFileSync(hook, hookContent);
-// fs.chmodSync(hook, '755');
+fs.symlinkSync(symlink, hook);
