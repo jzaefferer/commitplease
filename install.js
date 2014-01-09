@@ -41,12 +41,14 @@ if (fs.existsSync(hook)) {
 	console.log('');
 	console.log(name + ': Detected an existing git hook');
 	fs.writeFileSync(hook + '.old', fs.readFileSync(hook));
+	fs.unlinkSync(hook);
 	console.log(name + ': Old hook backuped to .old');
 	console.log('');
 }
 
 // Everything is ready for the installation of the pre-commit hook. Write it and
 // make it executable.
+console.log(path.relative("./commit-msg-hook.js", root))
 fs.symlinkSync(path.relative("./commit-msg-hook.js", root), hook);
 // fs.writeFileSync(hook, hookContent);
 // fs.chmodSync(hook, '755');
