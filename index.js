@@ -1,6 +1,6 @@
 require( "colors" );
 var fs = require( "fs" ),
-	validate = require( "lib/validate" );
+	validate = require( "./lib/validate" );
 module.exports = function( messageFile ) {
 	var message = fs.readFileSync( messageFile ).toString();
 	var errors = validate( message );
