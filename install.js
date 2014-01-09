@@ -2,7 +2,7 @@
 // https://github.com/bahmutov/pre-git/blob/d755ab63d132464bf5a569044033d24fbcd9f55f/install.js
 
 var pkg = require('./package');
-console.log(pkg.name, pkg.version);
+// console.log(pkg.name, pkg.version);
 
 (function avoidSelfInstall() {
 	var nameRegex = new RegExp('node_modules/' + pkg.name + '$');
@@ -44,4 +44,5 @@ if ( fs.existsSync( hook ) ) {
 	process.exit(0);
 }
 
-fs.symlinkSync(symlink, hook);
+fs.symlinkSync( symlink, hook );
+console.log( "Installed " + hook );
