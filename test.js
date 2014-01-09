@@ -29,13 +29,19 @@ var valid = [
 				subject: 70
 			}
 		}
-	}
+	},
+	{
+		msg: "Component: short message\n" +
+		"\n" +
+		"# Long comment that has to be ignored line too long beyond 72 chars line too long beyond" +
+			"line too long line too long line too long"
+	},
 ];
 
 var invalid = [
 	{
-		msg: "Component: short message but actually over default limit",
-		expected: [ "First line (subject) must be no longer than 50 characters" ]
+		msg: "Component: short message but actually a little bit over default character limit",
+		expected: [ "First line (subject) must be no longer than 72 characters" ]
 	},
 	{
 		msg: "foo:",
@@ -50,9 +56,9 @@ var invalid = [
 		expected: [ "Second line must always be empty" ]
 	},
 	{
-		msg: "component: bla\n\nline too long beyond 72 chars line too long beyond" +
+		msg: "component: bla\n\nline too long beyond 80 chars line too long beyond" +
 			"line too long line too long line too long",
-		expected: [ "Commit message line 3 too long: 91 characters, only 72 allowed. Was: line too long beyond[...]" ]
+		expected: [ "Commit message line 3 too long: 91 characters, only 80 allowed. Was: line too long beyond[...]" ]
 	}
 ];
 
