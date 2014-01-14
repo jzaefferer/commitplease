@@ -23,11 +23,11 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "nodeunit": "0.8.2",
-    "semver": "~2.2.1"
+    "nodeunit": "0.8.2"
   },
   "dependencies": {
+    "colors": "0.6.2",
     "mout": "0.8.0",
-    "colors": "0.6.2"
+    "semver": "2.2.1"
   }
 }
