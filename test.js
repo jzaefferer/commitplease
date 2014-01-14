@@ -14,7 +14,12 @@ var valid = [
 		"\n" +
 		"Long description\n" +
 		"\n" +
-		"Close #xxx"
+		"Closes #123"
+	},
+	{
+		msg: "Component: short message\n" +
+		"\n" +
+		"Closes jquery/jquery-mobile#123"
 	},
 	{
 		msg: "short message",
@@ -59,6 +64,10 @@ var invalid = [
 		msg: "component: bla\n\nline too long beyond 80 chars line too long beyond" +
 			"line too long line too long line too long",
 		expected: [ "Commit message line 3 too long: 91 characters, only 80 allowed. Was: line too long beyond[...]" ]
+	},
+	{
+		msg: "Docs: Fix a typo\n\nCloses: gh-155",
+		expected: [ "Invalid ticket reference, must be /(Fixes|Closes) (#|gh-)[0-9]+/, was: Closes: gh-155" ]
 	}
 ];
 
