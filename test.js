@@ -41,6 +41,12 @@ var valid = [
 		"# Long comment that has to be ignored line too long beyond 72 chars line too long beyond" +
 			"line too long line too long line too long"
 	},
+	{
+		msg: "v1.13.0"
+	},
+	{
+		msg: "0.0.1"
+	}
 ];
 
 var invalid = [

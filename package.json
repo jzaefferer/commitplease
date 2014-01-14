@@ -23,7 +23,8 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "nodeunit": "0.8.2"
+    "nodeunit": "0.8.2",
+    "semver": "~2.2.1"
   },
   "dependencies": {
     "mout": "0.8.0",
