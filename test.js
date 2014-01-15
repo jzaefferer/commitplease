@@ -76,7 +76,7 @@ var invalid = [
 	},
 	{
 		msg: "Docs: Fix a typo\n\nCloses: gh-155",
-		expected: [ "Invalid ticket reference, must be /(Fixes|Closes) (#|gh-)[0-9]+/, was: Closes: gh-155" ]
+		expected: [ "Invalid ticket reference, must be /(Fixes|Closes) (.*#|gh-)[0-9]+/, was: Closes: gh-155" ]
 	}
 ];
 
