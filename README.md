@@ -2,7 +2,7 @@
 
 [![Build Status](https://secure.travis-ci.org/jzaefferer/commitplease.png)](http://travis-ci.org/jzaefferer/commitplease)
 
-This [node.js](http://nodejs.org/) module validates git commit messages while you commit.
+This [node.js](http://nodejs.org/) module validates git commit messages while you commit, according to the rules specified in the [jQuery Commit Guidlines](http://contribute.jquery.org/commits-and-pull-requests/#commit-guidelines). These are pretty generic, so this module should be useful for most projects that care about commit message formats.
 
 ## Installation
 
@@ -37,13 +37,10 @@ if (errors.length) {
 Options and their defaults:
 
 ```js
-// component in subject is required
 component: true,
 limits: {
-	// hard limit of subject
-	subject: 50,
-	// hard limit of all other lines
-	other: 72
+	subject: 72,
+	other: 80
 }
 ```
 
