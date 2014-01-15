@@ -46,6 +46,9 @@ var valid = [
 	},
 	{
 		msg: "0.0.1"
+	},
+	{
+		msg: "Component: Message\n#comment"
 	}
 ];
 
