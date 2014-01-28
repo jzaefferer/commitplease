@@ -49,6 +49,13 @@ var valid = [
 	},
 	{
 		msg: "Component: Message\n#comment"
+	},
+	{
+		msg: "Component: short message\n" +
+		"\n" +
+		"Fixes some bug.\n" +
+		"\n" +
+		"Fixes #123"
 	}
 ];
 
