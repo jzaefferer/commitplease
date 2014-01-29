@@ -54,6 +54,14 @@ var valid = [
 		msg: "Component: short message\n" +
 		"\n" +
 		"Fixes some bug.\n" +
+		"Fix some other bug.\n" +
+		"\n" +
+		"Fixes #123"
+	},
+	{
+		msg: "Component: short message\n" +
+		"\n" +
+		"Fix some bug.\n" +
 		"\n" +
 		"Fixes #123"
 	}
@@ -84,6 +92,18 @@ var invalid = [
 	{
 		msg: "Docs: Fix a typo\n\nCloses: gh-155",
 		expected: [ "Invalid ticket reference, must be /(Fixes|Closes) (.*#|gh-)[0-9]+/, was: Closes: gh-155" ]
+	},
+	{
+		msg: "Bla: blub\n\nClosing #1",
+		expected: [ "Invalid ticket reference, must be /(Fixes|Closes) (.*#|gh-)[0-9]+/, was: Closing #1" ]
+	},
+	{
+		msg: "Bla: blub\n\nFixing gh-1",
+		expected: [ "Invalid ticket reference, must be /(Fixes|Closes) (.*#|gh-)[0-9]+/, was: Fixing gh-1" ]
+	},
+	{
+		msg: "Bla: blub\n\nResolving xy-9991",
+		expected: [ "Invalid ticket reference, must be /(Fixes|Closes) (.*#|gh-)[0-9]+/, was: Resolving xy-9991" ]
 	}
 ];
 
