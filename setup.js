@@ -1,7 +1,7 @@
 (function avoidSelfInstall() {
 	var pkg = require('./package'),
 		nameRegex = new RegExp('node_modules/' + pkg.name + '$');
-	if (!nameRegex.test(process.cwd())) {
+	if (!nameRegex.test(process.cwd().replace(/\\/g, '/'))) {
 		console.log('running install inside self, no need');
 		process.exit(0);
 	}
