@@ -29,7 +29,14 @@ var symlink = path.relative(path.resolve(hooks), "./commit-msg-hook.js");
 var context = {
 	hook: hook,
 	createLink: function() {
-		fs.symlinkSync( symlink, hook );
+		try {
+			fs.symlinkSync( symlink, hook );
+		} catch(e) {
+			if (/EPERM/.test(e.message)) {
+				console.error("Failed to create symlink. If you're running this on Windows, make sure you execute this as admin");
+			}
+			throw e;
+		}
 	},
 	destroyLink: function() {
 		fs.unlinkSync( hook );
