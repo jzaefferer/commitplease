@@ -64,6 +64,9 @@ var valid = [
 		"Fix some bug.\n" +
 		"\n" +
 		"Fixes #123"
+	},
+	{
+		msg: "Merge branch 'one' into two"
 	}
 ];
 
