@@ -4,8 +4,6 @@
   "description": "Validates strings as commit messages",
   "main": "index.js",
   "scripts": {
-    "install": "node install",
-    "uninstall": "node uninstall",
     "test": "nodeunit test.js"
   },
   "repository": {
