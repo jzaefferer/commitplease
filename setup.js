@@ -24,29 +24,31 @@ if (!fs.existsSync(hooks)) {
 }
 
 var hook = path.resolve(hooks, "commit-msg");
-var symlink = path.relative(path.resolve(hooks), "./commit-msg-hook.js");
+var hookFile = path.relative( path.resolve( hooks ), "./commit-msg-hook.js" );
 
 var context = {
 	hook: hook,
-	createLink: function() {
+	create: function() {
 		try {
-			fs.symlinkSync( symlink, hook );
+			fs.writeFileSync( hook, fs.readFileSync( hookFile ) );
+			fs.chmodSync( hook, "755" );
 		} catch(e) {
 			if (/EPERM/.test(e.message)) {
-				console.error("Failed to create symlink. If you're running this on Windows, make sure you execute this as admin");
+				console.error( "Failed to write commit-msg hook. " +
+					"Make sure you have the necessary permissions." );
 			}
 			throw e;
 		}
 	},
-	destroyLink: function() {
+	destroy: function() {
 		fs.unlinkSync( hook );
 	}
 };
 
 if ( fs.existsSync( hook ) ) {
-	context.hookExits = true;
-	var stats = fs.lstatSync( hook );
-	if ( stats.isSymbolicLink() && fs.readlinkSync( hook ) === symlink ) {
+	context.hookExists = true;
+	var content = fs.readFileSync( hook, "utf-8" );
+	if ( content && content.split( "\n" )[ 1 ] === "// commitplease-original" ) {
 		context.selfmadeHook = true;
 	}
 }

@@ -26,7 +26,7 @@
     "nodeunit": "0.8.2"
   },
   "dependencies": {
-    "colors": "0.6.2",
+    "chalk": "0.4.0",
     "mout": "0.8.0",
     "semver": "2.2.1"
   }
