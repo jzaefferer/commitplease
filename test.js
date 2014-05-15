@@ -39,7 +39,15 @@ var valid = [
 		msg: "Component: short message\n" +
 		"\n" +
 		"# Long comment that has to be ignored line too long beyond 72 chars line too long beyond" +
-			"line too long line too long line too long"
+			"line too long line too long line too long\n" +
+		"# ------------------------ >8 ------------------------\n" +
+		"# Do not touch the line above.\n" +
+		"# Everything below will be removed.\n" +
+		"diff --git a/test.js b/test.js\n" +
+		"index 36978ce..8edf326 100644\n" +
+		"diff --git a/foo b/foo\n" +
+		"-	\n" +
+		"+	}, mment that has to be ignored line too long beyond 72 chars line too long beyond"
 	},
 	{
 		msg: "v1.13.0"
@@ -107,6 +115,11 @@ var invalid = [
 	{
 		msg: "Bla: blub\n\nResolving xy-9991",
 		expected: [ "Invalid ticket reference, must be /(Fixes|Closes) (.*#|gh-)[0-9]+/, was: Resolving xy-9991" ]
+	},
+	{
+		msg: "bla: blu\n\n# comment\nResolving xy12312312312"
+		,
+		expected: [ "Invalid ticket reference, must be /(Fixes|Closes) (.*#|gh-)[0-9]+/, was: Resolving xy12312312312" ]
 	}
 ];
 
