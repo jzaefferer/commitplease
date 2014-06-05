@@ -10,6 +10,8 @@ This [node.js](http://nodejs.org/) module validates git commit messages while yo
 npm install commitplease
 ```
 
+A git version of 1.8.5 or newer is recommended. If you use `git commit --verbose`, it is required.
+
 ## Usage
 
 Just commit as usual. This modules installs a git commit-msg hook, automatically validating all commit messages as you enter them. Invalid messages will be rejected, with details on what's wrong and a copy of the input.
