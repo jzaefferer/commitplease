@@ -80,6 +80,17 @@ var valid = [
 
 var invalid = [
 	{
+		msg: "",
+		expected: [ "First line (subject) must not be empty" ],
+		options: {
+			component: false
+		}
+	},
+	{
+		msg: "",
+		expected: [ "First line (subject) must not be empty", "First line (subject) must indicate the component", "First line (subject) must have a message after the component" ]
+	},
+	{
 		msg: "Component: short message but actually a little bit over default character limit",
 		expected: [ "First line (subject) must be no longer than 72 characters" ]
 	},
