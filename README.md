@@ -18,7 +18,7 @@ Just commit as usual. This modules installs a git commit-msg hook, automatically
 
 ## API
 
-*The API is a work-in-progress. Currently there's no way to customize options when using the bundled commit hook.*
+*The API is a work-in-progress*
 
 ```js
 var validate = require('commitplease/lib/validate');
@@ -35,7 +35,6 @@ if (errors.length) {
 * returns `Array`: Empty for valid messages, one or more items as `String` for each problem found
 
 
-
 Options and their defaults:
 
 ```js
@@ -45,6 +44,26 @@ limits: {
 	other: 80
 }
 ```
+
+### Customizing the bundled options
+
+The validation options can be overriden by configuring the `commitplease` property on your own project's `package.json`. This allows you to customize some of the validation rules available.
+
+Here's an example for disabling the `component` message validation:
+
+```json
+{
+  "name": "Example",
+  "description": "An example project with custom commit hook options",
+  "devDependencies": {
+    "commitplease": "1.9.x"
+  },
+  "commitplease": {
+    "component": false
+  }
+}
+```
+
 
 ## License
 Copyright 2014 Jörn Zaefferer. Released under the terms of the MIT license.
