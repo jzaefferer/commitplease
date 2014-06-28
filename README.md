@@ -56,7 +56,7 @@ Here's an example for disabling the `component` message validation:
   "name": "Example",
   "description": "An example project with custom commit hook options",
   "devDependencies": {
-    "commitplease": "1.9.x"
+    "commitplease": "1.10.x"
   },
   "commitplease": {
     "component": false
