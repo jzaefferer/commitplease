@@ -70,4 +70,4 @@ Copyright 2014 Jörn Zaefferer. Released under the terms of the MIT license.
 
 ---
 
-Support this project by [donating on Gittip](https://www.gittip.com/jzaefferer/).
+Support this project by [donating on Gratipay](https://gratipay.com/jzaefferer/).
