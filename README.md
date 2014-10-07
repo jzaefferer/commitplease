@@ -34,22 +34,26 @@ if (errors.length) {
 * `options` (`Object`, optional): Use this to override the default settings, see properties and defaults below
 * returns `Array`: Empty for valid messages, one or more items as `String` for each problem found
 
-
 Options and their defaults:
 
 ```js
 component: true,
+components: [],
 limits: {
 	subject: 72,
 	other: 80
 }
 ```
 
+* `component`: The default `true` requires a component, set to `false` to skip the check.
+* `components`: A list of valid components. When a component is found, it's compared to the ones specified in this array.
+* `limits`: Line length limits, for subject and other lines.
+
 ### Customizing the bundled options
 
-The validation options can be overriden by configuring the `commitplease` property on your own project's `package.json`. This allows you to customize some of the validation rules available.
+The validation options can be overriden by configuring the `commitplease` property on your own project's `package.json`. This allows you to customize the validation rules.
 
-Here's an example for disabling the `component` message validation:
+Here's an example for specifiying what components are valid:
 
 ```json
 {
@@ -59,7 +63,7 @@ Here's an example for disabling the `component` message validation:
     "commitplease": "1.10.x"
   },
   "commitplease": {
-    "component": false
+    "components": [ "Build", "Test", "Core", "Legacy" ]
   }
 }
 ```

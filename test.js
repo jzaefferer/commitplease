@@ -46,6 +46,12 @@ var valid = [
 		}
 	},
 	{
+		msg: "Test: short message",
+		options: {
+			components: [ "Test" ]
+		}
+	},
+	{
 		msg: "Component: message over default of 50 but below limit off 70",
 		options: {
 			limits: {
@@ -91,6 +97,13 @@ var invalid = [
 		expected: [ "First line (subject) must not be empty" ],
 		options: {
 			component: false
+		}
+	},
+	{
+		msg: "Test: Message",
+		expected: [ "Component invalid, was 'Test', must be one of these: Build, Legacy" ],
+		options: {
+			components: [ "Build", "Legacy" ]
 		}
 	},
 	{
