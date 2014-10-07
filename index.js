@@ -3,7 +3,8 @@ var fs = require( "fs" ),
 	root = path.resolve( __dirname, "../.." ),
 	chalk = require( "chalk" ),
 	validate = require( "./lib/validate" ),
-	options = require( path.join( root, "package.json" ) ).commitplease || {};
+	options = fs.existsSync( path.join( root, "package.json" ) ) &&
+		require( path.join( root, "package.json" ) ).commitplease || {};
 
 module.exports = function( messageFile ) {
 	var message = fs.readFileSync( messageFile ).toString();
