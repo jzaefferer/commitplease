@@ -3,7 +3,7 @@ var validate = require( "./lib/validate" ),
 
 var messageWithMultipleLines = "Component: short message\n" +
 	"\n" +
-	"Long description"
+	"Long description";
 
 var messageWithDiff = "Component: short message\n" +
 	"\n" +
@@ -18,7 +18,7 @@ var messageWithDiff = "Component: short message\n" +
 	"index 36978ce..8edf326 100644\n" +
 	"diff --git a/foo b/foo\n" +
 	"-	\n" +
-	"+	}, mment that has to be ignored line too long beyond 72 chars line too long beyond"
+	"+	}, mment that has to be ignored line too long beyond 72 chars line too long beyond";
 
 var valid = [
 	{
@@ -148,8 +148,7 @@ var invalid = [
 		expected: [ "Invalid ticket reference, must be /(Fixes|Closes) (.*#|gh-)[0-9]+/, was: Resolving xy-9991" ]
 	},
 	{
-		msg: "bla: blu\n\n# comment\nResolving xy12312312312"
-		,
+		msg: "bla: blu\n\n# comment\nResolving xy12312312312",
 		expected: [ "Invalid ticket reference, must be /(Fixes|Closes) (.*#|gh-)[0-9]+/, was: Resolving xy12312312312" ]
 	}
 ];
