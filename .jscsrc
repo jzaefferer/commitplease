@@ -1,0 +1,7 @@
+{
+	"preset": "jquery",
+	"requireMultipleVarDecl": null,
+	"maximumLineLength": 120,
+	// Until https://github.com/jscs-dev/node-jscs/issues/695 is resolved
+	"disallowMultipleLineBreaks": null
+}

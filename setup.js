@@ -32,7 +32,7 @@ var context = {
 		try {
 			fs.writeFileSync( hook, fs.readFileSync( hookFile ) );
 			fs.chmodSync( hook, "755" );
-		} catch(e) {
+		} catch (e) {
 			if (/EPERM/.test(e.message)) {
 				console.error( "Failed to write commit-msg hook. " +
 					"Make sure you have the necessary permissions." );
