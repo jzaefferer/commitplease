@@ -20,6 +20,10 @@ var messageWithDiff = "Component: short message\n" +
 	"-	\n" +
 	"+	}, mment that has to be ignored line too long beyond 72 chars line too long beyond";
 
+var testComponent = {
+	components: [ "Test" ]
+};
+
 var valid = [
 	{
 		msg: "Component: short message"
@@ -88,6 +92,22 @@ var valid = [
 	},
 	{
 		msg: "Merge branch 'one' into two"
+	},
+	{
+		msg: "fixup! for git to squash",
+		options: testComponent
+	},
+	{
+		msg: "squash! for git to squish",
+		options: testComponent
+	},
+	{
+		msg: "[fix]: whatever fix",
+		options: testComponent
+	},
+	{
+		msg: "[Tmp]: do this and that",
+		options: testComponent
 	}
 ];
 
