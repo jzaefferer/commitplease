@@ -2,7 +2,7 @@
 
 [![Build Status](https://secure.travis-ci.org/jzaefferer/commitplease.png)](http://travis-ci.org/jzaefferer/commitplease)
 
-This [node.js](http://nodejs.org/) module validates git commit messages while you commit, according to the rules specified in the [jQuery Commit Guidlines](http://contribute.jquery.org/commits-and-pull-requests/#commit-guidelines). These are pretty generic, so this module should be useful for most projects that care about commit message formats.
+This [node.js](http://nodejs.org/) module validates git commit messages while you commit, according to the rules specified in the [jQuery Commit Guidelines](http://contribute.jquery.org/commits-and-pull-requests/#commit-guidelines). These are pretty generic, so this module should be useful for most projects that care about commit message formats.
 
 ## Installation
 
