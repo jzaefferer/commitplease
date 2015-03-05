@@ -94,6 +94,9 @@ var valid = [
 		msg: "Merge branch 'one' into two"
 	},
 	{
+		msg: "Merge e8d808b into f040453"
+	},
+	{
 		msg: "fixup! for git to squash",
 		options: testComponent
 	},
