@@ -13,6 +13,11 @@ var root = path.resolve(__dirname, "../..");
 var git = path.resolve(root, ".git");
 var hooks = path.resolve(git, "hooks");
 
+if (require(path.resolve(root, "package")).commitplease.nohook) {
+	console.error("package.json indicates to skip hook");
+	process.exit(0);
+}
+
 // Check if we are in a git repository so we can bail out early when this is not the case.
 if (!fs.existsSync(git) || !fs.lstatSync(git).isDirectory()) {
 	console.error("Could not find git repo in " + git);
