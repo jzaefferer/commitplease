@@ -13,7 +13,8 @@ var root = path.resolve(__dirname, "../..");
 var git = path.resolve(root, ".git");
 var hooks = path.resolve(git, "hooks");
 
-if (require(path.resolve(root, "package")).commitplease.nohook) {
+var rootPackage = require(path.resolve(root, "package"));
+if (rootPackage.commitplease && rootPackage.commitplease.nohook) {
 	console.error("package.json indicates to skip hook");
 	process.exit(0);
 }
