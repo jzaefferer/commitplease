@@ -111,6 +111,9 @@ var valid = [
 	{
 		msg: "[Tmp]: do this and that",
 		options: testComponent
+	},
+	{
+		msg: "fixedToolbar: Prevent resize"
 	}
 ];
 
