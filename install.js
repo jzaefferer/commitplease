@@ -8,7 +8,7 @@ if ( setup.selfmadeHook ) {
 	console.log( chalk.red( "Detected an existing git commit-msg hook" ) );
 	console.log( "" );
 	console.log( chalk.red( "Remove it and install this package again to install commitplease properly" ) );
-	process.exit(0);
+	process.exit( 0 );
 }
 
 setup.create();

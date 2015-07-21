@@ -181,18 +181,18 @@ var invalid = [
 ];
 
 exports.valid = function( test ) {
-	valid.forEach(function(check, index) {
+	valid.forEach( function( check, index ) {
 		test.deepEqual( validate( sanitize( check.msg ), check.options ), [], "valid " + index +
 			" " + check.msg );
-	});
+	} );
 	test.done();
 };
 
 exports.invalid = function( test ) {
-	invalid.forEach(function(check, index) {
+	invalid.forEach( function( check, index ) {
 		test.deepEqual( validate( sanitize( check.msg ), check.options ), check.expected,
 			"invalid " + index + " " + check.msg );
-	});
+	} );
 	test.done();
 };
 
