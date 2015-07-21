@@ -14,7 +14,7 @@ module.exports = function( messageFile ) {
 		console.error( "Invalid commit message, please fix the following issues:\n" );
 		console.error( chalk.red( "- " + errors.join( "\n- " ) ) );
 		console.error();
-		console.error( "Commit message was:");
+		console.error( "Commit message was:" );
 		console.error();
 		console.error( chalk.green( message ) );
 		process.exit( 1 );
