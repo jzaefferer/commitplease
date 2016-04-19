@@ -1,19 +1,26 @@
 var merge = require('mout/object/merge')
 var validate = require('./lib/validate')
 var sanitize = require('./lib/sanitize')
+var defaults = require('./lib/defaults')
 
-var profile0 = validate.defaults
-var profile1 = merge(validate.defaults, {component: false})
-var profile2 = merge(validate.defaults, {components: ['Build', 'Legacy']})
+var jquery0 = defaults.jquery
 
-var profile3 = merge(
-  validate.defaults, {
+var jquery1 = merge(
+  defaults.jquery, {component: false}
+)
+
+var jquery2 = merge(
+  defaults.jquery, {components: ['Build', 'Legacy']}
+)
+
+var jquery3 = merge(
+  defaults.jquery, {
     markerPattern: '^((clos|fix|resolv)(e[sd]|ing))|(refs?)',
     ticketPattern: '^((Closes|Fixes) ([a-zA-Z]{2,}-)[0-9]+)|(Refs? [^#])'
   }
 )
 
-var profiles0 = [profile0, profile1, profile3]
+var profiles0 = [jquery0, jquery1, jquery3]
 
 var messages0 = [
   {
@@ -41,30 +48,54 @@ var messages0 = [
          '#                  comment'
   },
   {
+    msg: '# comment\n' +
+         'Component: short message'
+  },
+  {
     msg: 'Component: short message\n' +
          'text on next line',
     reasons: new Map([
-      [profile0, [ 'Second line must always be empty' ]],
-      [profile1, [ 'Second line must always be empty' ]],
-      [profile3, [ 'Second line must always be empty' ]]
+      [jquery0, [ 'Second line must always be empty' ]],
+      [jquery1, [ 'Second line must always be empty' ]],
+      [jquery3, [ 'Second line must always be empty' ]]
     ])
   },
   {
     msg: 'No component here, short message',
-    accepts: [profile1],
+    accepts: [jquery1],
     reasons: new Map([
-      [profile0, ['First line (subject) must indicate the component']],
-      [profile3, ['First line (subject) must indicate the component']]
+      [jquery0,
+       ['First line must be <Component>": "<subject>\nMissing colon ":"']
+      ],
+      [jquery3,
+       ['First line must be <Component>": "<subject>\nMissing colon ":"']
+      ]
+    ])
+  },
+  {
+    msg: '# comment\n' +
+         'No component here, short message',
+    accepts: [jquery1],
+    reasons: new Map([
+      [jquery0,
+       ['First line must be <Component>": "<subject>\nMissing colon ":"']
+      ],
+      [jquery3,
+       ['First line must be <Component>": "<subject>\nMissing colon ":"']
+      ]
     ])
   },
   {
     msg: 'Build: short message',
-    accepts: [profile2]
+    accepts: [jquery2]
   },
   {
     msg: 'Test: short message',
     reasons: new Map([
-      [profile2, ["Component invalid, was 'Test', must be one of these: Build, Legacy"]]
+      [jquery2,
+       ['First line must be <Component>": "<subject>\n' +
+        '<Component> invalid, was "Test", must be one of these:\nBuild, Legacy']
+      ]
     ])
   },
   {
@@ -74,15 +105,23 @@ var messages0 = [
          'notice the absense of newline character in test'
   },
   {
-    msg: 'Component: short message but actually a little bit over default character limit',
+    msg: 'Component: short message' +
+         ' but actually a little bit over default character limit',
     reasons: new Map([
-      [profile0, [ 'First line (subject) must be no longer than 72 characters' ]],
-      [profile1, [ 'First line (subject) must be no longer than 72 characters' ]],
-      [profile2, [
-        'First line (subject) must be no longer than 72 characters',
-        "Component invalid, was 'Component', must be one of these: Build, Legacy"
-      ]],
-      [profile3, [ 'First line (subject) must be no longer than 72 characters' ]]
+      [jquery0,
+       ['First line of commit message must be no longer than 72 characters']
+      ],
+      [jquery1,
+       ['First line of commit message must be no longer than 72 characters']
+      ],
+      [jquery2,
+       ['First line of commit message must be no longer than 72 characters',
+        'First line must be <Component>": "<subject>\n' +
+        '<Component> invalid, was "Component", must be one of these:\nBuild, Legacy']
+      ],
+      [jquery3,
+       ['First line of commit message must be no longer than 72 characters']
+      ]
     ])
   },
   {
@@ -90,21 +129,33 @@ var messages0 = [
          'Long description is way past the 80 characters limit' +
          'Long description is way past the 80 characters limit',
     reasons: new Map([
-      [profile0, [ 'Commit message line 3 too long: 104 characters, only 80 allowed. Was: Long description is [...]' ]],
-      [profile1, [ 'Commit message line 3 too long: 104 characters, only 80 allowed. Was: Long description is [...]' ]],
-      [profile3, [ 'Commit message line 3 too long: 104 characters, only 80 allowed. Was: Long description is [...]' ]]
+      [jquery0,
+       [ 'Commit message line 3 too long: 104 characters, only 80 allowed.\n' +
+         'Was: Long description is [...]' ]
+      ],
+      [jquery1,
+       ['Commit message line 3 too long: 104 characters, only 80 allowed.\n' +
+         'Was: Long description is [...]']
+      ],
+      [jquery3,
+       ['Commit message line 3 too long: 104 characters, only 80 allowed.\n' +
+         'Was: Long description is [...]']
+      ]
     ])
   },
   {
     msg: 'Build:',
-    accepts: [profile1],
+    accepts: [jquery1],
     reasons: new Map([
-      [profile0, [ 'First line (subject) must have a message after the component' ]],
-      [profile2, [
-        "Component invalid, was 'Build:', must be one of these: Build, Legacy",
-        'First line (subject) must have a message after the component'
-      ]],
-      [profile3, [ 'First line (subject) must have a message after the component' ]]
+      [jquery0,
+       ['First line must be <Component>": "<subject>\n<subject> was empty']
+      ],
+      [jquery2,
+       ['First line must be <Component>": "<subject>\n<subject> was empty']
+      ],
+      [jquery3,
+       ['First line must be <Component>": "<subject>\n<subject> was empty']
+      ]
     ])
   },
   {
@@ -150,9 +201,9 @@ var messages0 = [
          'Fixes #1\n' +
          'Fixes #123',
     reasons: new Map([
-      [profile3, [
-        'Invalid ticket reference, must be /' + profile3.ticketPattern + '/, was: Fixes #1',
-        'Invalid ticket reference, must be /' + profile3.ticketPattern + '/, was: Fixes #123'
+      [jquery3, [
+        'Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: Fixes #1',
+        'Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: Fixes #123'
       ]]
     ])
   },
@@ -160,8 +211,8 @@ var messages0 = [
     msg: 'Component: short message\n\n' +
          'Fixes #1 Fixes #123',
     reasons: new Map([
-      [profile3, [
-        'Invalid ticket reference, must be /' + profile3.ticketPattern + '/, was: Fixes #1 Fixes #123'
+      [jquery3, [
+        'Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: Fixes #1 Fixes #123'
       ]]
     ])
   },
@@ -170,9 +221,9 @@ var messages0 = [
          'Fixes jquery/jquery#1\n' +
          'Fixes jquery/jquery#123',
     reasons: new Map([
-      [profile3, [
-        'Invalid ticket reference, must be /' + profile3.ticketPattern + '/, was: Fixes jquery/jquery#1',
-        'Invalid ticket reference, must be /' + profile3.ticketPattern + '/, was: Fixes jquery/jquery#123'
+      [jquery3, [
+        'Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: Fixes jquery/jquery#1',
+        'Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: Fixes jquery/jquery#123'
       ]]
     ])
   },
@@ -180,8 +231,8 @@ var messages0 = [
     msg: 'Component: short message\n\n' +
          'Fixes jquery/jquery#1 Fixes jquery/jquery#123',
     reasons: new Map([
-      [profile3, [
-        'Invalid ticket reference, must be /' + profile3.ticketPattern + '/, was: Fixes jquery/jquery#1 Fixes jquery/jquery#123'
+      [jquery3, [
+        'Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: Fixes jquery/jquery#1 Fixes jquery/jquery#123'
       ]]
     ])
   },
@@ -217,9 +268,9 @@ var messages0 = [
          'Closes #1\n' +
          'Closes #123',
     reasons: new Map([
-      [profile3, [
-        'Invalid ticket reference, must be /' + profile3.ticketPattern + '/, was: Closes #1',
-        'Invalid ticket reference, must be /' + profile3.ticketPattern + '/, was: Closes #123'
+      [jquery3, [
+        'Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: Closes #1',
+        'Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: Closes #123'
       ]]
     ])
   },
@@ -227,8 +278,8 @@ var messages0 = [
     msg: 'Component: short message\n\n' +
          'Closes #1 Closes #123',
     reasons: new Map([
-      [profile3, [
-        'Invalid ticket reference, must be /' + profile3.ticketPattern + '/, was: Closes #1 Closes #123'
+      [jquery3, [
+        'Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: Closes #1 Closes #123'
       ]]
     ])
   },
@@ -237,9 +288,9 @@ var messages0 = [
          'Closes jquery/jquery#1\n' +
          'Closes jquery/jquery#123',
     reasons: new Map([
-      [profile3, [
-        'Invalid ticket reference, must be /' + profile3.ticketPattern + '/, was: Closes jquery/jquery#1',
-        'Invalid ticket reference, must be /' + profile3.ticketPattern + '/, was: Closes jquery/jquery#123'
+      [jquery3, [
+        'Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: Closes jquery/jquery#1',
+        'Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: Closes jquery/jquery#123'
       ]]
     ])
   },
@@ -247,8 +298,8 @@ var messages0 = [
     msg: 'Component: short message\n\n' +
          'Closes jquery/jquery#1 Closes jquery/jquery#123',
     reasons: new Map([
-      [profile3, [
-        'Invalid ticket reference, must be /' + profile3.ticketPattern + '/, was: Closes jquery/jquery#1 Closes jquery/jquery#123'
+      [jquery3, [
+        'Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: Closes jquery/jquery#1 Closes jquery/jquery#123'
       ]]
     ])
   },
@@ -283,7 +334,7 @@ var messages0 = [
     msg: 'Component: short message\n\n' +
          'Refs #1',
     reasons: new Map([
-      [profile3, ['Invalid ticket reference, must be /' + profile3.ticketPattern + '/, was: Refs #1']]
+      [jquery3, ['Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: Refs #1']]
     ])
   },
   {
@@ -314,7 +365,7 @@ var messages0 = [
     msg: 'Component: short message\n\n' +
          'Ref #1',
     reasons: new Map([
-      [profile3, ['Invalid ticket reference, must be /' + profile3.ticketPattern + '/, was: Ref #1']]
+      [jquery3, ['Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: Ref #1']]
     ])
   },
   {
@@ -351,7 +402,7 @@ var messages0 = [
          'Fixes WEB-1 Fixes WEB-123\n' +
          'Fixes CRM-123\n' +
          'Fixes CRM-1 Fixes CRM-123\n',
-    rejects: [profile3]
+    rejects: [jquery3]
   },
   {
     msg: 'Component: short message\n\n' +
@@ -363,7 +414,7 @@ var messages0 = [
          'Closes WEB-1 Closes WEB-123\n' +
          'Closes CRM-123\n' +
          'Closes CRM-1 Closes CRM-123\n',
-    rejects: [profile3]
+    rejects: [jquery3]
   },
   {
     msg: 'Component: short message\n\n' +
@@ -375,7 +426,7 @@ var messages0 = [
          'Fixes WEB-1 Closes WEB-123\n' +
          'Fixes CRM-123\n' +
          'Closes CRM-1 Fixes CRM-123\n',
-    rejects: [profile3]
+    rejects: [jquery3]
   },
   {
     msg: 'Component: short message\n\n' +
@@ -383,45 +434,265 @@ var messages0 = [
          'Closes #42\n\n' +
          'An afterthought is ok',
     reasons: new Map([
-      [profile3, [ 'Invalid ticket reference, must be /' + profile3.ticketPattern + '/, was: Closes #42' ]]
+      [jquery3, [ 'Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: Closes #42' ]]
     ])
   },
   {
     msg: 'Component: short message\n\n' +
          'Closes: gh-1',
     reasons: new Map([
-      [profile0, [ 'Invalid ticket reference, must be /' + profile0.ticketPattern + '/, was: Closes: gh-1' ]],
-      [profile1, [ 'Invalid ticket reference, must be /' + profile1.ticketPattern + '/, was: Closes: gh-1' ]],
-      [profile3, [ 'Invalid ticket reference, must be /' + profile3.ticketPattern + '/, was: Closes: gh-1' ]]
+      [jquery0, [ 'Invalid ticket reference, must be /' + jquery0.ticketPattern + '/\nWas: Closes: gh-1' ]],
+      [jquery1, [ 'Invalid ticket reference, must be /' + jquery1.ticketPattern + '/\nWas: Closes: gh-1' ]],
+      [jquery3, [ 'Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: Closes: gh-1' ]]
     ])
   },
   {
     msg: 'Component: short message\n\n' +
          'Closing #1',
     reasons: new Map([
-      [profile0, [ 'Invalid ticket reference, must be /' + profile0.ticketPattern + '/, was: Closing #1' ]],
-      [profile1, [ 'Invalid ticket reference, must be /' + profile1.ticketPattern + '/, was: Closing #1' ]],
-      [profile3, [ 'Invalid ticket reference, must be /' + profile3.ticketPattern + '/, was: Closing #1' ]]
+      [jquery0, [ 'Invalid ticket reference, must be /' + jquery0.ticketPattern + '/\nWas: Closing #1' ]],
+      [jquery1, [ 'Invalid ticket reference, must be /' + jquery1.ticketPattern + '/\nWas: Closing #1' ]],
+      [jquery3, [ 'Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: Closing #1' ]]
     ])
   },
   {
     msg: 'Component: short message\n\n' +
          'Fixing gh-1',
     reasons: new Map([
-      [profile0, [ 'Invalid ticket reference, must be /' + profile0.ticketPattern + '/, was: Fixing gh-1' ]],
-      [profile1, [ 'Invalid ticket reference, must be /' + profile1.ticketPattern + '/, was: Fixing gh-1' ]],
-      [profile3, [ 'Invalid ticket reference, must be /' + profile3.ticketPattern + '/, was: Fixing gh-1' ]]
+      [jquery0, [ 'Invalid ticket reference, must be /' + jquery0.ticketPattern + '/\nWas: Fixing gh-1' ]],
+      [jquery1, [ 'Invalid ticket reference, must be /' + jquery1.ticketPattern + '/\nWas: Fixing gh-1' ]],
+      [jquery3, [ 'Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: Fixing gh-1' ]]
     ])
   },
   {
     msg: 'Component: short message\n\n' +
          'Resolving WEB-1',
     reasons: new Map([
-      [profile0, [ 'Invalid ticket reference, must be /' + profile0.ticketPattern + '/, was: Resolving WEB-1' ]],
-      [profile1, [ 'Invalid ticket reference, must be /' + profile1.ticketPattern + '/, was: Resolving WEB-1' ]],
-      [profile3, [ 'Invalid ticket reference, must be /' + profile3.ticketPattern + '/, was: Resolving WEB-1' ]]
+      [jquery0, [ 'Invalid ticket reference, must be /' + jquery0.ticketPattern + '/\nWas: Resolving WEB-1' ]],
+      [jquery1, [ 'Invalid ticket reference, must be /' + jquery1.ticketPattern + '/\nWas: Resolving WEB-1' ]],
+      [jquery3, [ 'Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: Resolving WEB-1' ]]
     ])
   },
+  {
+    msg: 'Component: short message\n\n' +
+         '# Please enter the commit message . Lines starting\n' +
+         "# with '#' will be ignored, an empty message aborts the commit.\n" +
+         '# On branch commitplease-rocks\n' +
+         '# Changes to be committed:\n' +
+         '#	modified:   test.js\n' +
+         '# ------------------------ >8 ------------------------\n' +
+         '# Do not touch the line above.\n' +
+         '# Everything below will be removed.\n' +
+         'diff --git a/test.js b/test.js\n' +
+         'index c689515..706b86f 100644\n' +
+         '--- a/test.js\n' +
+         '+++ b/test.js\n' +
+         '@@ -1,14 +1,10 @@\n' +
+         "var validate = require('./lib/validate')\n" +
+         "var sanitize = require('./lib/sanitize')\n"
+  },
+  {
+    msg: 'Component: short message\n\n' +
+         'This PR closes #123'
+  }
+]
+
+var angular0 = defaults.angular
+
+var profiles1 = [angular0]
+var messages1 = [
+  {
+    msg: 'feat(scope): subject'
+  },
+  {
+    msg: 'fix(scope): subject'
+  },
+  {
+    msg: 'docs(scope): subject'
+  },
+  {
+    msg: 'style(scope): subject'
+  },
+  {
+    msg: 'refactor(scope): subject'
+  },
+  {
+    msg: 'perf(scope): subject'
+  },
+  {
+    msg: 'test(scope): subject'
+  },
+  {
+    msg: 'chore(scope): subject'
+  },
+  {
+    msg: 'feat($scope): subject'
+  },
+  {
+    msg: 'feat(guide/location): subject'
+  },
+  {
+    msg: 'feat(scope-scope): subject'
+  },
+  {
+    msg: 'feat(ngCamelCase): subject'
+  },
+  {
+    msg: 'revert: feat(scope): subject'
+  },
+  {
+    msg: 'feat(*): subject'
+  },
+  {
+    msg: 'feat(scope1): docs(scope2):'
+  },
+  {
+    msg: 'feat',
+    reasons: new Map([
+      [angular0,
+       ['First line must be <type>"("<scope>"): "<subject>\n' +
+        'Missing opening parethesis "("']
+      ]
+    ])
+  },
+  {
+    msg: 'feat subject',
+    reasons: new Map([
+      [angular0,
+       ['First line must be <type>"("<scope>"): "<subject>\n' +
+        'Missing opening parethesis "("']
+      ]
+    ])
+  },
+  {
+    msg: 'feat: subject',
+    reasons: new Map([
+      [angular0,
+       ['First line must be <type>"("<scope>"): "<subject>\n' +
+        'Missing opening parethesis "("']
+      ]
+    ])
+  },
+  {
+    msg: 'feat(',
+    reasons: new Map([
+      [angular0,
+       ['First line must be <type>"("<scope>"): "<subject>\n' +
+        'Need a closing parenthesis ")" after <scope>']
+      ]
+    ])
+  },
+  {
+    msg: 'feat()',
+    reasons: new Map([
+      [angular0,
+       ['First line must be <type>"("<scope>"): "<subject>\n' +
+        'Scope  does not match \\S+.*']
+      ]
+    ])
+  },
+  {
+    msg: 'feat(scope)',
+    reasons: new Map([
+      [angular0,
+       ['First line must be <type>"("<scope>"): "<subject>\n' +
+        'Need a colon ":" after the closing parenthesis ")"']
+      ]
+    ])
+  },
+  {
+    msg: 'feat(scope):',
+    reasons: new Map([
+      [angular0,
+       ['First line must be <type>"("<scope>"): "<subject>\n' +
+        'There must be a space " " after colon ":"' ]
+      ]
+    ])
+  },
+  {
+    msg: 'feat(scope):subject',
+    reasons: new Map([
+      [angular0,
+       ['First line must be <type>"("<scope>"): "<subject>\n' +
+        'There must be a space " " after colon ":"']
+      ]
+    ])
+  },
+  {
+    msg: 'feat(scope): Subject',
+    reasons: new Map([
+      [angular0,
+       ['<subject> must start with a lowercase letter']
+      ]
+    ])
+  },
+  {
+    msg: 'feat(scope): subject.',
+    reasons: new Map([
+      [angular0,
+       ['<subject> must not end with a dot "."']
+      ]
+    ])
+  },
+  {
+    msg: 'revert this commit',
+    reasons: new Map([
+      [angular0,
+       ['If this is a revert of a previous commit, please write:\n' +
+        '"revert: "<type>"("<scope>"): "<subject>"']
+      ]
+    ])
+  },
+  {
+    msg: 'revert(scope): subject',
+    reasons: new Map([
+      [angular0,
+       ['If this is a revert of a previous commit, please write:\n' +
+        '"revert: "<type>"("<scope>"): "<subject>"']
+      ]
+    ])
+  },
+  {
+    msg: 'revert: (scope): subject',
+    reasons: new Map([
+      [angular0,
+       ['First line must be "revert: "<type>"("<scope>"): "<subject>\n' +
+        '<type> was empty, must be one of these:\n' +
+        'feat, fix, docs, style, refactor, perf, test, chore']
+      ]
+    ])
+  },
+  {
+    msg: 'revert: feat: subject',
+    reasons: new Map([
+      [angular0,
+       ['First line must be "revert: "<type>"("<scope>"): "<subject>\n' +
+        'Missing opening parethesis "("']
+      ]
+    ])
+  },
+  {
+    msg: 'revert: subject',
+    reasons: new Map([
+      [angular0,
+       ['First line must be "revert: "<type>"("<scope>"): "<subject>\n' +
+        'Missing opening parethesis "("']
+      ]
+    ])
+  },
+  {
+    msg: 'feat(scope1):docs(scope2): subject',
+    reasons: new Map([
+      [angular0,
+       ['First line must be <type>"("<scope>"): "<subject>\n' +
+        'There must be a space " " after colon ":"']
+      ]
+    ])
+  }
+]
+
+var profiles9 = profiles0.concat(profiles1)
+var messages9 = [
   {
     msg: '0.0.1'
   },
@@ -453,70 +724,41 @@ var messages0 = [
     msg: 'squash! short message'
   },
   {
-    msg: '[fix]: short message'
+    msg: '[fix]: short message',
+    reasons: new Map([
+      [jquery2, ['First line must be <Component>": "<subject>\n<Component> invalid, was "[fix]", must be one of these:\nBuild, Legacy']],
+      [angular0, ['First line must be <type>"("<scope>"): "<subject>\nMissing opening parethesis "("']]
+    ])
   },
   {
-    msg: '[Tmp]: short message'
+    msg: '[Tmp]: short message',
+    reasons: new Map([
+      [jquery2, ['First line must be <Component>": "<subject>\n<Component> invalid, was "[Tmp]", must be one of these:\nBuild, Legacy']],
+      [angular0, ['First line must be <type>"("<scope>"): "<subject>\nMissing opening parethesis "("']]
+    ])
   },
   {
     msg: '',
     reasons: new Map([
-      [profile0, [
-        'First line (subject) must not be empty',
-        'First line (subject) must indicate the component',
-        'First line (subject) must have a message after the component'
-      ]],
-      [profile1, [ 'First line (subject) must not be empty' ]],
-      [profile2, [
-        'First line (subject) must not be empty',
-        'First line (subject) must indicate the component',
-        'First line (subject) must have a message after the component'
-      ]],
-      [profile3, [
-        'First line (subject) must not be empty',
-        'First line (subject) must indicate the component',
-        'First line (subject) must have a message after the component'
-      ]]
+      [jquery0, ['Commit message is empty, abort with error']],
+      [jquery1, ['Commit message is empty, abort with error']],
+      [jquery2, ['Commit message is empty, abort with error']],
+      [jquery3, ['Commit message is empty, abort with error']],
+      [angular0, ['Commit message is empty, abort with error']]
     ])
-  },
-  {
-    msg: 'Component: short message\n\n' +
-         '# Please enter the commit message . Lines starting\n' +
-         "# with '#' will be ignored, an empty message aborts the commit.\n" +
-         '# On branch commitplease-rocks\n' +
-         '# Changes to be committed:\n' +
-         '#	modified:   test.js\n' +
-         '# ------------------------ >8 ------------------------\n' +
-         '# Do not touch the line above.\n' +
-         '# Everything below will be removed.\n' +
-         'diff --git a/test.js b/test.js\n' +
-         'index c689515..706b86f 100644\n' +
-         '--- a/test.js\n' +
-         '+++ b/test.js\n' +
-         '@@ -1,14 +1,10 @@\n' +
-         "var validate = require('./lib/validate')\n" +
-         "var sanitize = require('./lib/sanitize')\n"
-  },
-  {
-    msg: 'Component: short message\n\n' +
-         'This PR closes #123'
   }
 ]
 
-// reserve for Angular
-var profiles1 = []
-var messages1 = []
-
 var groups = new Map([
   [profiles0, messages0],
-  [profiles1, messages1]
+  [profiles1, messages1],
+  [profiles9, messages9]
 ])
 
 exports.tests = function (test) {
   for (var group of groups) {
     testGroup(test, group)
   }
-
   test.done()
 }
 
