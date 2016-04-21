@@ -6,7 +6,7 @@
   "scripts": {
     "install": "node install",
     "uninstall": "node uninstall",
-    "test": "jshint lib/ *.js && jscs lib/ *.js && nodeunit test.js"
+    "test": "standard && nodeunit test.js"
   },
   "repository": {
     "type": "git",
@@ -23,10 +23,9 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "jscs": "^2.11.0",
-    "jshint": "^2.8.0",
     "mout": "^0.12.0",
-    "nodeunit": "^0.9.1"
+    "nodeunit": "^0.9.1",
+    "standard": "^3.0.0"
   },
   "dependencies": {
     "chalk": "^1.1.1",

@@ -1,4 +1,4 @@
 #!/usr/bin/env node
 
 // `commitplease-original`
-require( "commitplease" )( process.argv[ 2 ] );
+require('commitplease')(process.argv[ 2 ])
