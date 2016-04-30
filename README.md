@@ -41,6 +41,9 @@ Options and their defaults:
 ```js
 component: true,
 components: [],
+markerPattern: '^(clos|fix|resolv)(e[sd]|ing)',
+actionPattern: '^([Cc]los|[Ff]ix|[Rr]esolv)(e[sd]|ing)\\s+[^\\s\\d]+(\\s|$)',
+ticketPattern: '^(Closes|Fixes) (.*#|gh-|[A-Z]{2,}-)[0-9]+',
 limits: {
 	subject: 72,
 	other: 80
@@ -50,6 +53,15 @@ limits: {
 * `component`: The default `true` requires a component, set to `false` to skip the check.
 * `components`: A list of valid components. When a component is found, it's compared to the ones specified in this array.
 * `limits`: Line length limits, for subject and other lines.
+
+The following options are experimental and are subject to change:
+* `markerPattern`: A (intentionally loose) RegExp that indicates that the line might be a ticket reference. Is caseinsensitive.
+* `actionPattern`: A RegExp that makes a line marked by `markerPattern` valid even if the line does not fit `ticketPattern`
+* `ticketPattern`: A RegExp that detects ticket references: Closes gh-1, Fixes gh-42, WEB-451 and similar.
+
+The ticket reference match will fail only if `markerPattern` succeeds and __both__ `ticketPattern` and `actionPattern` fail.
+
+When overwriting these patterns in `package.json`, remember to escape special characters.
 
 ### Customizing the bundled options
 

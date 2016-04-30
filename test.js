@@ -85,6 +85,13 @@ var valid = [
   },
   {
     msg: 'Component: short message\n' +
+         '\n' +
+         'Resolves some issue.\n' +
+         '\n' +
+         'Fixes #123'
+  },
+  {
+    msg: 'Component: short message\n' +
       '\n' +
       'Fix some bug.\n' +
       '\n' +
@@ -96,6 +103,11 @@ var valid = [
       'Fix some bug.\n' +
       '\n' +
       'Fixes WEB-1093'
+  },
+  {
+    msg: 'Component: short message\n' +
+         '\n' +
+         'Fixes CRM-322'
   },
   {
     msg: "Merge branch 'one' into two"
@@ -173,14 +185,16 @@ var valid = [
   },
   {
     msg: 'Event: Separate trigger/simulate into its own module\n' +
-      '\n' +
-      'Fixes gh-1864\n' +
-      'Closes gh-2692\n' +
-      '\n' +
-      'This also pulls the focusin/out special event into its own module, since that\n' +
-      'depends on simulate(). NB: The ajax module triggers events pretty heavily.'
+         '\n' +
+         'Fixes gh-1864\n' +
+         'Closes gh-2692\n' +
+         '\n' +
+         'This also pulls the focusin/out special event into its own module, since that\n' +
+         'depends on simulate(). NB: The ajax module triggers events pretty heavily.'
   }
 ]
+
+var ticketPattern = new RegExp(validate.defaults.ticketPattern)
 
 var invalid = [
   {
@@ -228,24 +242,30 @@ var invalid = [
   },
   {
     msg: 'Docs: Fix a typo\n\nCloses: gh-155',
-    expected: [ 'Invalid ticket reference, must be /(Fixes|Closes) (.*#|gh-|[A-Z]{2,}-)[0-9]+/, was: Closes: gh-155' ]
+    expected: [ 'Invalid ticket reference, must be ' + ticketPattern + ', was: Closes: gh-155' ]
   },
   {
     msg: 'Bla: blub\n\nClosing #1',
-    expected: [ 'Invalid ticket reference, must be /(Fixes|Closes) (.*#|gh-|[A-Z]{2,}-)[0-9]+/, was: Closing #1' ]
+    expected: [ 'Invalid ticket reference, must be ' + ticketPattern + ', was: Closing #1' ]
   },
   {
     msg: 'Bla: blub\n\nFixing gh-1',
-    expected: [ 'Invalid ticket reference, must be /(Fixes|Closes) (.*#|gh-|[A-Z]{2,}-)[0-9]+/, was: Fixing gh-1' ]
+    expected: [ 'Invalid ticket reference, must be ' + ticketPattern + ', was: Fixing gh-1' ]
   },
   {
     msg: 'Bla: blub\n\nResolving xy-9991',
-    expected: [ 'Invalid ticket reference, must be /(Fixes|Closes) (.*#|gh-|[A-Z]{2,}-)[0-9]+/, was: Resolving xy-9991' ]
+    expected: [ 'Invalid ticket reference, must be ' + ticketPattern + ', was: Resolving xy-9991' ]
   },
   {
     msg: 'bla: blu\n\n# comment\nResolving xy12312312312',
-    expected: [ 'Invalid ticket reference, must be /(Fixes|Closes) (.*#|gh-|[A-Z]{2,}-)[0-9]+/,' +
-    ' was: Resolving xy12312312312' ]
+    expected: [ 'Invalid ticket reference, must be ' + ticketPattern + ', was: Resolving xy12312312312' ]
+  },
+  {
+    msg: 'Component: short message\n\nFixes #123',
+    options: {
+      ticketPattern: /^(Closes|Fixes) ([A-Z]{2,}-)[0-9]+/
+    },
+    expected: [ 'Invalid ticket reference, must be ' + '/^(Closes|Fixes) ([A-Z]{2,}-)[0-9]+/' + ', was: Fixes #123' ]
   }
 ]
 
