@@ -95,6 +95,19 @@ In addition, you can specify the `nohook` option as something truthy, which prev
 }
 ```
 
+When using commitplease together with [husky](https://github.com/typicode/husky), the following configuration will let husky manage all the hooks and trigger commitplease as well:
+
+```json
+{
+  "scripts": {
+    "commitmsg": "node node_modules/commitplease"
+  }
+  "commitplease": {
+    "nohook": true
+  }
+}
+```
+
 ## License
 Copyright Jörn Zaefferer  
 Released under the terms of the MIT license.
