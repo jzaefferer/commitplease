@@ -7,8 +7,9 @@ var sanitize = require('./lib/sanitize')
 var options = fs.existsSync(path.join(root, 'package.json')) &&
   require(path.join(root, 'package.json')).commitplease || {}
 
-module.exports = function (messageFile) {
-  var message = sanitize(fs.readFileSync(messageFile).toString())
+;(function () {
+  var messageFile = path.resolve(process.cwd(), '.git/COMMIT_EDITMSG')
+  var message = sanitize(fs.readFileSync(messageFile, 'utf8').toString())
   var errors = validate(message, options)
   if (errors.length) {
     console.error('Invalid commit message, please fix the following issues:\n')
@@ -19,4 +20,4 @@ module.exports = function (messageFile) {
     console.error(chalk.green(message))
     process.exit(1)
   }
-}
+}())

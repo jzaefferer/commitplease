@@ -95,6 +95,21 @@ In addition, you can specify the `nohook` option as something truthy, which prev
 }
 ```
 
+When using commitplease together with [husky](https://github.com/typicode/husky), the following configuration will let husky manage all the hooks and trigger commitplease as well:
+
+```json
+{
+  "scripts": {
+    "commitmsg": "commitplease"
+  },
+  "commitplease": {
+    "nohook": true
+  }
+}
+```
+
+However, since husky does not use npm in silent mode (and there is [no easy way](https://github.com/typicode/husky/pull/47) to make it [do so](https://github.com/npm/npm/issues/5452)), there will be a lot of additional output when a message fails validation. Therefore, using commitplease alone is recommended.
+
 ## License
 Copyright Jörn Zaefferer  
 Released under the terms of the MIT license.
