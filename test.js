@@ -77,37 +77,51 @@ var valid = [
   },
   {
     msg: 'Component: short message\n' +
-      '\n' +
-      'Fixes some bug.\n' +
-      'Fix some other bug.\n' +
-      '\n' +
-      'Fixes #123'
+         '\n' +
+         'Fixes some bug.\n' +
+         'Fix some other bug.\n' +
+         'And fix these bugs too.\n' +
+         'And fixes other bugs too.\n'
   },
   {
     msg: 'Component: short message\n' +
          '\n' +
          'Resolves some issue.\n' +
+         'Resolve some other issue.\n' +
+         'And resolve these issues too.\n' +
+         'And resolves some other issues too.\n'
+  },
+  {
+    msg: 'Component: short message\n' +
          '\n' +
+         'Closes some issue.\n' +
+         'Close some other issue.\n' +
+         'And close these issues too.\n' +
+         'And closes some other issues too.'
+  },
+  {
+    msg: 'Component: short message\n' +
+         '\n' +
+         'Fixes #1\n' +
          'Fixes #123'
   },
   {
     msg: 'Component: short message\n' +
-      '\n' +
-      'Fix some bug.\n' +
-      '\n' +
-      'Fixes #123'
-  },
-  {
-    msg: 'Component: short message\n' +
-      '\n' +
-      'Fix some bug.\n' +
-      '\n' +
-      'Fixes WEB-1093'
+         '\n' +
+         'Fixes gh-1\n' +
+         'Fixes gh-123'
   },
   {
     msg: 'Component: short message\n' +
          '\n' +
-         'Fixes CRM-322'
+         'Fixes WEB-1\n' +
+         'Fixes WEB-123'
+  },
+  {
+    msg: 'Component: short message\n' +
+         '\n' +
+         'Fixes CRM-1\n' +
+         'Fixes CRM-123'
   },
   {
     msg: "Merge branch 'one' into two"
@@ -136,46 +150,46 @@ var valid = [
   },
   {
     msg: 'Docs:Tests: Remove legacy code & add support comments where needed\n' +
-      '\n' +
-      'This commits backports some changes done in the patch to the then-existing\n' +
-      'compat branch that removed support for old browsers and added some support\n' +
-      'comments.\n' +
-      '\n' +
-      'Refs 90d7cc1d8b2ea7ac75f0eacb42439349c9c73278'
+         '\n' +
+         'This commits backports some changes done in the patch to the then-existing\n' +
+         'compat branch that removed support for old browsers and added some support\n' +
+         'comments.\n' +
+         '\n' +
+         'Refs 90d7cc1d8b2ea7ac75f0eacb42439349c9c73278'
   },
   {
     msg: 'Support: improve support properties computation\n' +
-      '\n' +
-      '* Remove div from the memory if it is not needed anymore\n' +
-      '\n' +
-      '* Make `computeStyleTests` method a singleton\n' +
-      '\n' +
-      'Fixes gh-3018 Closes gh-3021'
+         '\n' +
+         '* Remove div from the memory if it is not needed anymore\n' +
+         '\n' +
+         '* Make `computeStyleTests` method a singleton\n' +
+         '\n' +
+         'Fixes gh-3018 Closes gh-3021'
   },
   {
     msg: 'Tests: add additional test for jQuery.isPlainObject\n' +
-      '\n' +
-      'Ref 00575d4d8c7421c5119f181009374ff2e7736127\n' +
-      'Also see discussion in\n' +
-      'https://github.com/jquery/jquery/pull/2970#discussion_r54970557'
+         '\n' +
+         'Ref 00575d4d8c7421c5119f181009374ff2e7736127\n' +
+         'Also see discussion in\n' +
+         'https://github.com/jquery/jquery/pull/2970#discussion_r54970557'
   },
   {
     msg: 'Revert "Offset: account for scroll when calculating position"\n' +
-      '\n' +
-      'This reverts commit 2d715940b9b6fdeed005cd006c8bf63951cf7fb2.\n' +
-      'This commit provoked new issues: gh-2836, gh-2828.\n' +
-      'At the meeting, we decided to revert offending commit\n' +
-      '(in all three branches - 2.2-stable, 1.12-stable and master)\n' +
-      'and tackle this issue in 3.x.\n' +
-      '\n' +
-      'Fixes gh-2828'
+         '\n' +
+         'This reverts commit 2d715940b9b6fdeed005cd006c8bf63951cf7fb2.\n' +
+         'This commit provoked new issues: gh-2836, gh-2828.\n' +
+         'At the meeting, we decided to revert offending commit\n' +
+         '(in all three branches - 2.2-stable, 1.12-stable and master)\n' +
+         'and tackle this issue in 3.x.\n' +
+         '\n' +
+         'Fixes gh-2828'
   },
   {
     msg: 'Revert "Attributes: Remove undocumented .toggleClass( boolean ) signature"\n' +
-      '\n' +
-      'This reverts commit 53f798cf4d783bb813b4d1ba97411bc752b275f3.\n' +
-      '\n' +
-      '- Turns out this is documented, even if not fully. Need to deprecate before removal.',
+         '\n' +
+         'This reverts commit 53f798cf4d783bb813b4d1ba97411bc752b275f3.\n' +
+         '\n' +
+         '- Turns out this is documented, even if not fully. Need to deprecate before removal.',
     options: {
       limits: {
         subject: 90,
