@@ -454,78 +454,78 @@ exports.tests = function (test) {
 }
 
 function testGroup (test, group) {
-  var [profiles, messages] = [group[0], group[1]]
+  let [profiles, messages] = [group[0], group[1]]
 
-  for (var profile of profiles) {
-    for (var message of messages) {
-      var excludes = message.excludes
+  for (let profile of profiles) {
+    for (let message of messages) {
+      let excludes = message.excludes
       if (excludes && excludes.indexOf(profile) !== -1) {
         continue
       }
 
-      var msg = message.msg
+      let msg = message.msg
 
-      var accepts = message.accepts
+      let accepts = message.accepts
       if (accepts && accepts.indexOf(profile) !== -1) {
-        var result = validate(sanitize(msg), profile)
+        let result = validate(sanitize(msg), profile)
         test.deepEqual(result, [], '\n' + msg)
 
         continue
       }
 
-      var rejects = message.rejects
+      let rejects = message.rejects
       if (rejects && rejects.indexOf(profile) !== -1) {
-        var result = validate(sanitize(msg), profile)
+        let result = validate(sanitize(msg), profile)
         test.notDeepEqual(result, [], '\n' + msg)
 
         continue
       }
 
-      var reasons = message.reasons
+      let reasons = message.reasons
       if (reasons && reasons.get(profile)) {
-        var reason = reasons.get(profile)
+        let reason = reasons.get(profile)
 
-        var result = validate(sanitize(msg), profile)
+        let result = validate(sanitize(msg), profile)
         test.deepEqual(result, reason, '\n' + msg)
 
         continue
       }
 
       // assume default: profile must pass the test
-      var result = validate(sanitize(msg), profile)
+      let result = validate(sanitize(msg), profile)
       test.deepEqual(result, [], '\n' + msg)
     }
   }
 
-  for (var message of messages) {
-    var msg = message.msg
+  for (let message of messages) {
+    let msg = message.msg
 
-    var accepts = message.accepts
+    let accepts = message.accepts
     if (accepts) {
-      for (var profile of accepts) {
+      for (let profile of accepts) {
         if (profiles.indexOf(profile) === -1) {
-          var result = validate(sanitize(msg), profile)
+          let result = validate(sanitize(msg), profile)
           test.deepEqual(result, [], '\n' + msg)
         }
       }
     }
 
-    var rejects = message.rejects
+    let rejects = message.rejects
     if (rejects) {
-      for (var profile of rejects) {
+      for (let profile of rejects) {
         if (profiles.indexOf(profile) === -1) {
-          var result = validate(sanitize(msg), profile)
+          let result = validate(sanitize(msg), profile)
           test.notDeepEqual(result, [], '\n' + msg)
         }
       }
     }
 
-    var reasons = message.reasons
+    let reasons = message.reasons
     if (reasons) {
-      for (var key2val of reasons) {
-        var [profile, reason] = [key2val[0], key2val[1]]
+      for (let key2val of reasons) {
+        let [profile, reason] = [key2val[0], key2val[1]]
         if (profiles.indexOf(profile) === -1) {
-          var result = validate(sanitize(msg), profile)
+          let result = validate(sanitize(msg), profile)
           test.deepEqual(result, reason, '\n' + msg)
         }
       }
