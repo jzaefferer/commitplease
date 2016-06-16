@@ -8,7 +8,8 @@ var profile2 = merge(validate.defaults, {components: ['Build', 'Legacy']})
 
 var profile3 = merge(
   validate.defaults, {
-    ticketPattern: '^(Closes|Fixes) ([a-zA-Z]{2,}-)[0-9]+'
+    markerPattern: '^((clos|fix|resolv)(e[sd]|ing))|(refs?)',
+    ticketPattern: '^((Closes|Fixes) ([a-zA-Z]{2,}-)[0-9]+)|(Refs? [^#])'
   }
 )
 
@@ -280,6 +281,68 @@ var messages0 = [
   },
   {
     msg: 'Component: short message\n\n' +
+         'Refs #1',
+    reasons: new Map([
+      [profile3, ['Invalid ticket reference, must be /' + profile3.ticketPattern + '/, was: Refs #1']]
+    ])
+  },
+  {
+    msg: 'Component: short message\n\n' +
+         'Refs gh-1\n'
+  },
+  {
+    msg: 'Component: short message\n\n' +
+         'Refs WEB-1'
+  },
+  {
+    msg: 'Component: short message\n\n' +
+         'Refs 90d828b'
+  },
+  {
+    msg: 'Component: short message\n\n' +
+         'Refs jquery/jquery#1'
+  },
+  {
+    msg: 'Component: short message\n\n' +
+         'Refs short text'
+  },
+  {
+    msg: 'Component: short message\n\n' +
+         'Refs github.com/wiki#link'
+  },
+  {
+    msg: 'Component: short message\n\n' +
+         'Ref #1',
+    reasons: new Map([
+      [profile3, ['Invalid ticket reference, must be /' + profile3.ticketPattern + '/, was: Ref #1']]
+    ])
+  },
+  {
+    msg: 'Component: short message\n\n' +
+         'Ref gh-1\n'
+  },
+  {
+    msg: 'Component: short message\n\n' +
+         'Ref WEB-1'
+  },
+  {
+    msg: 'Component: short message\n\n' +
+         'Ref 90d828b'
+  },
+  {
+    msg: 'Component: short message\n\n' +
+         'Ref jquery/jquery#1'
+  },
+  {
+    msg: 'Component: short message\n\n' +
+         'Ref short text'
+  },
+  {
+    msg: 'Component: short message\n\n' +
+         'Ref github.com/wiki#link'
+  },
+  {
+    msg: 'Component: short message\n\n' +
          'Fixes #123\n' +
          'Fixes #1 Fixes #123\n' +
          'Fixes gh-123\n' +
@@ -433,6 +496,10 @@ var messages0 = [
          '@@ -1,14 +1,10 @@\n' +
          "var validate = require('./lib/validate')\n" +
          "var sanitize = require('./lib/sanitize')\n"
+  },
+  {
+    msg: 'Component: short message\n\n' +
+         'This PR closes #123'
   }
 ]
 
