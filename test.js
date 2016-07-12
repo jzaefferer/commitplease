@@ -3,6 +3,32 @@ var validate = require('./lib/validate')
 var sanitize = require('./lib/sanitize')
 var defaults = require('./lib/defaults')
 
+var jqueryColon =
+    'First line must be <Component>": "<subject>\n' +
+    'Missing colon ":"'
+var jqueryComponent =
+    'First line must be <Component>": "<subject>\n' +
+    '<Component> invalid, was "Component", must be one of these:\n' +
+    'Build, Legacy'
+var jqueryEmptyComponent =
+    'First line must be <Component>": "<subject>\n' +
+    '<Component> was empty, must be one of these:\n'
+var jqueryTestComponent =
+    'First line must be <Component>": "<subject>\n' +
+    '<Component> invalid, was "Test", must be one of these:\n' +
+    'Build, Legacy'
+var jqueryFixComponent =
+    'First line must be <Component>": "<subject>\n' +
+    '<Component> invalid, was "[fix]", must be one of these:\n' +
+    'Build, Legacy'
+var jqueryTmpComponent =
+    'First line must be <Component>": "<subject>\n' +
+    '<Component> invalid, was "[Tmp]", must be one of these:\n' +
+    'Build, Legacy'
+var jqueryEmptySubject =
+    'First line must be <Component>": "<subject>\n' +
+    '<subject> was empty'
+
 var jquery0 = defaults.jquery
 
 var jquery1 = merge(
@@ -64,12 +90,15 @@ var messages0 = [
     msg: 'No component here, short message',
     accepts: [jquery1],
     reasons: new Map([
-      [jquery0,
-       ['First line must be <Component>": "<subject>\nMissing colon ":"']
-      ],
-      [jquery3,
-       ['First line must be <Component>": "<subject>\nMissing colon ":"']
-      ]
+      [jquery0, [jqueryColon]],
+      [jquery3, [jqueryColon]]
+    ])
+  },
+  {
+    msg: ':No component here, short message',
+    reasons: new Map([
+      [jquery0, [jqueryEmptyComponent]],
+      [jquery3, [jqueryEmptyComponent]]
     ])
   },
   {
@@ -77,12 +106,8 @@ var messages0 = [
          'No component here, short message',
     accepts: [jquery1],
     reasons: new Map([
-      [jquery0,
-       ['First line must be <Component>": "<subject>\nMissing colon ":"']
-      ],
-      [jquery3,
-       ['First line must be <Component>": "<subject>\nMissing colon ":"']
-      ]
+      [jquery0, [jqueryColon]],
+      [jquery3, [jqueryColon]]
     ])
   },
   {
@@ -91,12 +116,7 @@ var messages0 = [
   },
   {
     msg: 'Test: short message',
-    reasons: new Map([
-      [jquery2,
-       ['First line must be <Component>": "<subject>\n' +
-        '<Component> invalid, was "Test", must be one of these:\nBuild, Legacy']
-      ]
-    ])
+    reasons: new Map([[jquery2, [jqueryTestComponent]]])
   },
   {
     msg: 'Component: short message\n' +
@@ -116,8 +136,7 @@ var messages0 = [
       ],
       [jquery2,
        ['First line of commit message must be no longer than 72 characters',
-        'First line must be <Component>": "<subject>\n' +
-        '<Component> invalid, was "Component", must be one of these:\nBuild, Legacy']
+        jqueryComponent]
       ],
       [jquery3,
        ['First line of commit message must be no longer than 72 characters']
@@ -147,15 +166,9 @@ var messages0 = [
     msg: 'Build:',
     accepts: [jquery1],
     reasons: new Map([
-      [jquery0,
-       ['First line must be <Component>": "<subject>\n<subject> was empty']
-      ],
-      [jquery2,
-       ['First line must be <Component>": "<subject>\n<subject> was empty']
-      ],
-      [jquery3,
-       ['First line must be <Component>": "<subject>\n<subject> was empty']
-      ]
+      [jquery0, [jqueryEmptySubject]],
+      [jquery2, [jqueryEmptySubject]],
+      [jquery3, [jqueryEmptySubject]]
     ])
   },
   {
@@ -497,6 +510,36 @@ var messages0 = [
   }
 ]
 
+var angularOpening =
+    'First line must be <type>"("<scope>"): "<subject>\n' +
+    'Need an opening parethesis "("'
+var angularOpeningRevert =
+    'First line must be "revert: "<type>"("<scope>"): "<subject>\n' +
+    'Need an opening parethesis "("'
+var angularClosing =
+    'First line must be <type>"("<scope>"): "<subject>\n' +
+    'Need a closing parenthesis ")" after <scope>'
+var angularSpace =
+    'First line must be <type>"("<scope>"): "<subject>\n' +
+    'Need a space " " after colon ":"'
+var angularScope =
+    'First line must be <type>"("<scope>"): "<subject>\n' +
+    'Scope  does not match \\S+.*'
+var angularColon =
+    'First line must be <type>"("<scope>"): "<subject>\n' +
+    'Need a colon ":" after the closing parenthesis ")"'
+var angularLowercase =
+    '<subject> must start with a lowercase letter'
+var angularDot =
+    '<subject> must not end with a dot "."'
+var angularIfRevert =
+    'If this is a revert of a previous commit, please write:\n' +
+    '"revert: "<type>"("<scope>"): "<subject>"'
+var angularEmptyTypeRevert =
+    'First line must be "revert: "<type>"("<scope>"): "<subject>\n' +
+    '<type> was empty, must be one of these:\n' +
+    'feat, fix, docs, style, refactor, perf, test, chore'
+
 var angular0 = defaults.angular
 
 var profiles1 = [angular0]
@@ -548,146 +591,67 @@ var messages1 = [
   },
   {
     msg: 'feat',
-    reasons: new Map([
-      [angular0,
-       ['First line must be <type>"("<scope>"): "<subject>\n' +
-        'Missing opening parethesis "("']
-      ]
-    ])
+    reasons: new Map([[angular0, [angularOpening]]])
   },
   {
     msg: 'feat subject',
-    reasons: new Map([
-      [angular0,
-       ['First line must be <type>"("<scope>"): "<subject>\n' +
-        'Missing opening parethesis "("']
-      ]
-    ])
+    reasons: new Map([[angular0, [angularOpening]]])
   },
   {
     msg: 'feat: subject',
-    reasons: new Map([
-      [angular0,
-       ['First line must be <type>"("<scope>"): "<subject>\n' +
-        'Missing opening parethesis "("']
-      ]
-    ])
+    reasons: new Map([[angular0, [angularOpening]]])
   },
   {
     msg: 'feat(',
-    reasons: new Map([
-      [angular0,
-       ['First line must be <type>"("<scope>"): "<subject>\n' +
-        'Need a closing parenthesis ")" after <scope>']
-      ]
-    ])
+    reasons: new Map([[angular0, [angularClosing]]])
   },
   {
     msg: 'feat()',
-    reasons: new Map([
-      [angular0,
-       ['First line must be <type>"("<scope>"): "<subject>\n' +
-        'Scope  does not match \\S+.*']
-      ]
-    ])
+    reasons: new Map([[angular0, [angularScope]]])
   },
   {
     msg: 'feat(scope)',
-    reasons: new Map([
-      [angular0,
-       ['First line must be <type>"("<scope>"): "<subject>\n' +
-        'Need a colon ":" after the closing parenthesis ")"']
-      ]
-    ])
+    reasons: new Map([[angular0, [angularColon]]])
   },
   {
     msg: 'feat(scope):',
-    reasons: new Map([
-      [angular0,
-       ['First line must be <type>"("<scope>"): "<subject>\n' +
-        'There must be a space " " after colon ":"' ]
-      ]
-    ])
+    reasons: new Map([[angular0, [angularSpace]]])
   },
   {
     msg: 'feat(scope):subject',
-    reasons: new Map([
-      [angular0,
-       ['First line must be <type>"("<scope>"): "<subject>\n' +
-        'There must be a space " " after colon ":"']
-      ]
-    ])
+    reasons: new Map([[angular0, [angularSpace]]])
   },
   {
     msg: 'feat(scope): Subject',
-    reasons: new Map([
-      [angular0,
-       ['<subject> must start with a lowercase letter']
-      ]
-    ])
+    reasons: new Map([[angular0, [angularLowercase]]])
   },
   {
     msg: 'feat(scope): subject.',
-    reasons: new Map([
-      [angular0,
-       ['<subject> must not end with a dot "."']
-      ]
-    ])
+    reasons: new Map([[angular0, [angularDot]]])
   },
   {
     msg: 'revert this commit',
-    reasons: new Map([
-      [angular0,
-       ['If this is a revert of a previous commit, please write:\n' +
-        '"revert: "<type>"("<scope>"): "<subject>"']
-      ]
-    ])
+    reasons: new Map([[angular0, [angularIfRevert]]])
   },
   {
     msg: 'revert(scope): subject',
-    reasons: new Map([
-      [angular0,
-       ['If this is a revert of a previous commit, please write:\n' +
-        '"revert: "<type>"("<scope>"): "<subject>"']
-      ]
-    ])
+    reasons: new Map([[angular0, [angularIfRevert]]])
   },
   {
     msg: 'revert: (scope): subject',
-    reasons: new Map([
-      [angular0,
-       ['First line must be "revert: "<type>"("<scope>"): "<subject>\n' +
-        '<type> was empty, must be one of these:\n' +
-        'feat, fix, docs, style, refactor, perf, test, chore']
-      ]
-    ])
+    reasons: new Map([[angular0, [angularEmptyTypeRevert]]])
   },
   {
     msg: 'revert: feat: subject',
-    reasons: new Map([
-      [angular0,
-       ['First line must be "revert: "<type>"("<scope>"): "<subject>\n' +
-        'Missing opening parethesis "("']
-      ]
-    ])
+    reasons: new Map([[angular0, [angularOpeningRevert]]])
   },
   {
     msg: 'revert: subject',
-    reasons: new Map([
-      [angular0,
-       ['First line must be "revert: "<type>"("<scope>"): "<subject>\n' +
-        'Missing opening parethesis "("']
-      ]
-    ])
+    reasons: new Map([[angular0, [angularOpeningRevert]]])
   },
   {
     msg: 'feat(scope1):docs(scope2): subject',
-    reasons: new Map([
-      [angular0,
-       ['First line must be <type>"("<scope>"): "<subject>\n' +
-        'There must be a space " " after colon ":"']
-      ]
-    ])
+    reasons: new Map([[angular0, [angularSpace]]])
   }
 ]
 
@@ -726,15 +690,15 @@ var messages9 = [
   {
     msg: '[fix]: short message',
     reasons: new Map([
-      [jquery2, ['First line must be <Component>": "<subject>\n<Component> invalid, was "[fix]", must be one of these:\nBuild, Legacy']],
-      [angular0, ['First line must be <type>"("<scope>"): "<subject>\nMissing opening parethesis "("']]
+      [jquery2, [jqueryFixComponent]],
+      [angular0, [angularOpening]]
     ])
   },
   {
     msg: '[Tmp]: short message',
     reasons: new Map([
-      [jquery2, ['First line must be <Component>": "<subject>\n<Component> invalid, was "[Tmp]", must be one of these:\nBuild, Legacy']],
-      [angular0, ['First line must be <type>"("<scope>"): "<subject>\nMissing opening parethesis "("']]
+      [jquery2, [jqueryTmpComponent]],
+      [angular0, [angularOpening]]
     ])
   },
   {

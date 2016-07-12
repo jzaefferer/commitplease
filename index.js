@@ -18,6 +18,13 @@ var options = fs.existsSync(path.join(root, 'package.json')) &&
     console.error('Commit message was:')
     console.error()
     console.error(chalk.green(message))
+
+    if (options.style === undefined || options.style === 'jquery') {
+      console.error('\nSee https://bit.ly/jquery-guidelines')
+    } else if (options.style === 'angular') {
+      console.error('\nSee https://bit.ly/angular-guidelines')
+    }
+
     process.exit(1)
   }
 }())
