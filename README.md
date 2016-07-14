@@ -170,6 +170,26 @@ if (errors.length) {
 }
 ```
 
+## Uninstall
+
+Remove your configurations of commitplease from your package.json, if any.
+
+If you are running `npm 2.x`, then:
+
+```
+npm uninstall commitplease --save-dev
+```
+
+If you are running `npm 3.x`, you will have to remove the hook manually:
+
+```
+rm .git/hooks/commit-msg
+npm uninstall commitplease --save-dev
+```
+
+There is [an open issue](https://github.com/npm/npm/issues/13381) to npm about this.
+
+
 ## License
 Copyright Jörn Zaefferer  
 Released under the terms of the MIT license.
