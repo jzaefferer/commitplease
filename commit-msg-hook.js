@@ -1,4 +1,4 @@
 #!/usr/bin/env node
 
-// `commitplease-original`
+// commitplease-original
 require('commitplease')

@@ -54,7 +54,7 @@ var context = {
 if (fs.existsSync(hook)) {
   context.hookExists = true
   var content = fs.readFileSync(hook, 'utf-8')
-  if (content && content.split('\n')[ 1 ] === '// commitplease-original') {
+  if (content && content.split('\n')[ 2 ] === '// commitplease-original') {
     context.selfmadeHook = true
   }
 }
