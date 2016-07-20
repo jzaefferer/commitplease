@@ -4,29 +4,29 @@ var sanitize = require('./lib/sanitize')
 var defaults = require('./lib/defaults')
 
 var jqueryColon =
-    'First line must be <Component>": "<subject>\n' +
-    'Missing colon ":"'
+    'First line must be <Component>: <subject>\n' +
+    'Missing colon :'
 var jqueryComponent =
-    'First line must be <Component>": "<subject>\n' +
+    'First line must be <Component>: <subject>\n' +
     '<Component> invalid, was "Component", must be one of these:\n' +
     'Build, Legacy'
 var jqueryEmptyComponent =
-    'First line must be <Component>": "<subject>\n' +
+    'First line must be <Component>: <subject>\n' +
     '<Component> was empty, must be one of these:\n'
 var jqueryTestComponent =
-    'First line must be <Component>": "<subject>\n' +
+    'First line must be <Component>: <subject>\n' +
     '<Component> invalid, was "Test", must be one of these:\n' +
     'Build, Legacy'
 var jqueryFixComponent =
-    'First line must be <Component>": "<subject>\n' +
+    'First line must be <Component>: <subject>\n' +
     '<Component> invalid, was "[fix]", must be one of these:\n' +
     'Build, Legacy'
 var jqueryTmpComponent =
-    'First line must be <Component>": "<subject>\n' +
+    'First line must be <Component>: <subject>\n' +
     '<Component> invalid, was "[Tmp]", must be one of these:\n' +
     'Build, Legacy'
 var jqueryEmptySubject =
-    'First line must be <Component>": "<subject>\n' +
+    'First line must be <Component>: <subject>\n' +
     '<subject> was empty'
 
 var jquery0 = defaults.jquery
