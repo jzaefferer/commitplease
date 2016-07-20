@@ -511,32 +511,32 @@ var messages0 = [
 ]
 
 var angularOpening =
-    'First line must be <type>"("<scope>"): "<subject>\n' +
-    'Need an opening parethesis "("'
+    'First line must be <type>(<scope>): <subject>\n' +
+    'Need an opening parenthesis: ('
 var angularOpeningRevert =
-    'First line must be "revert: "<type>"("<scope>"): "<subject>\n' +
-    'Need an opening parethesis "("'
+    'First line must be revert: <type>(<scope>): <subject>\n' +
+    'Need an opening parenthesis: ('
 var angularClosing =
-    'First line must be <type>"("<scope>"): "<subject>\n' +
-    'Need a closing parenthesis ")" after <scope>'
+    'First line must be <type>(<scope>): <subject>\n' +
+    'Need a closing parenthesis after scope: <scope>)'
 var angularSpace =
-    'First line must be <type>"("<scope>"): "<subject>\n' +
-    'Need a space " " after colon ":"'
+    'First line must be <type>(<scope>): <subject>\n' +
+    'Need a space after colon: ": "'
 var angularScope =
-    'First line must be <type>"("<scope>"): "<subject>\n' +
+    'First line must be <type>(<scope>): <subject>\n' +
     'Scope  does not match \\S+.*'
 var angularColon =
-    'First line must be <type>"("<scope>"): "<subject>\n' +
-    'Need a colon ":" after the closing parenthesis ")"'
+    'First line must be <type>(<scope>): <subject>\n' +
+    'Need a colon after the closing parenthesis: ):'
 var angularLowercase =
     '<subject> must start with a lowercase letter'
 var angularDot =
-    '<subject> must not end with a dot "."'
+    '<subject> must not end with a dot'
 var angularIfRevert =
     'If this is a revert of a previous commit, please write:\n' +
-    '"revert: "<type>"("<scope>"): "<subject>"'
+    'revert: <type>(<scope>): <subject>'
 var angularEmptyTypeRevert =
-    'First line must be "revert: "<type>"("<scope>"): "<subject>\n' +
+    'First line must be revert: <type>(<scope>): <subject>\n' +
     '<type> was empty, must be one of these:\n' +
     'feat, fix, docs, style, refactor, perf, test, chore'
 
