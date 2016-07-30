@@ -7,19 +7,41 @@
   }
 }())
 
-var path = require('path')
 var fs = require('fs')
-var root = path.resolve(__dirname, '../..')
-var git = path.resolve(root, '.git')
+var ini = require('ini')
+var path = require('path')
+
+var getOptions = function (repo) {
+  var pkg = path.join(repo, 'package.json')
+  var npm = path.join(repo, '.npmrc')
+
+  pkg = fs.existsSync(pkg) && require(pkg) || {}
+  npm = fs.existsSync(npm) && ini.parse(fs.readFileSync(npm, 'utf8')) || {}
+
+  pkg = pkg.commitplease
+  npm = npm.commitplease
+
+  return {pkg: pkg, npm: npm}
+}
+
+var repo = path.resolve(__dirname, '../..')
+
+var git = path.resolve(repo, '.git')
 var hooks = path.resolve(git, 'hooks')
 
-var rootPackage = require(path.resolve(root, 'package'))
-if (rootPackage.commitplease && rootPackage.commitplease.nohook) {
-  console.error('package.json indicates to skip hook')
+var options = getOptions(repo)
+
+var pkg = options.pkg
+var npm = options.npm
+if (pkg && pkg.nohook) {
+  console.log('package.json indicates to skip hook')
+  process.exit(0)
+} else if (npm && npm.nohook) {
+  console.log('.npmrc indicates to skip hook')
   process.exit(0)
 }
 
-// Check if we are in a git repository so we can bail out early when this is not the case.
+// If we are not in a git repository, bail out early.
 if (!fs.existsSync(git) || !fs.lstatSync(git).isDirectory()) {
   console.error('Could not find git repo in ' + git)
   process.exit(0)
@@ -53,8 +75,9 @@ var context = {
 
 if (fs.existsSync(hook)) {
   context.hookExists = true
-  var content = fs.readFileSync(hook, 'utf-8')
-  if (content && content.split('\n')[ 2 ] === '// commitplease-original') {
+  var githook = fs.readFileSync(hook, 'utf-8')
+  var comhook = fs.readFileSync(hookFile, 'utf-8')
+  if (githook.toString() === comhook.toString()) {
     context.selfmadeHook = true
   }
 }

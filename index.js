@@ -1,11 +1,14 @@
+#!/usr/bin/env node
+
 var fs = require('fs')
 var path = require('path')
-var root = path.resolve(__dirname, '../..')
 var chalk = require('chalk')
+
 var validate = require('./lib/validate')
 var sanitize = require('./lib/sanitize')
-var options = fs.existsSync(path.join(root, 'package.json')) &&
-  require(path.join(root, 'package.json')).commitplease || {}
+
+var root = path.join(path.resolve(__dirname, '../..'), 'package.json')
+var options = fs.existsSync(root) && require(root).commitplease || {}
 
 ;(function () {
   var messageFile = path.resolve(process.cwd(), '.git/COMMIT_EDITMSG')
