@@ -1,8 +1,16 @@
-var setup = require('./setup')
+var fs = require('fs')
+var path = require('path')
 
-if (setup.selfmadeHook) {
-  console.log('Found a hook installed by commitplease, removing')
-  setup.destroy()
-} else {
-  console.log("Didn't find a commit-msg hook installed by this module, doing nothing")
+var hooks = path.join(process.cwd(), '..', '..', '.git', 'hooks')
+
+var dstHook = path.join(hooks, 'commit-msg')
+var srcHook = path.relative(hooks, 'commit-msg-hook.js')
+
+if (fs.existsSync(dstHook) && fs.existsSync(srcHook)) {
+  var githook = fs.readFileSync(dstHook, 'utf-8')
+  var comhook = fs.readFileSync(srcHook, 'utf-8')
+  if (githook.toString() === comhook.toString()) {
+    console.log('Removing the hook installed by commitplease')
+    fs.unlinkSync(dstHook)
+  }
 }
