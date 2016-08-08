@@ -1,21 +1,36 @@
 #!/usr/bin/env node
 
 var fs = require('fs')
+var ini = require('ini')
 var path = require('path')
 var chalk = require('chalk')
+
+var merge = require('mout/object/merge')
 
 var validate = require('./lib/validate')
 var sanitize = require('./lib/sanitize')
 
-var root = path.join(path.resolve(__dirname, '../..'), 'package.json')
-var options = fs.existsSync(root) && require(root).commitplease || {}
+function getOptions () {
+  var pkg = path.join(process.cwd(), 'package.json')
+  var npm = path.join(process.cwd(), '.npmrc')
 
-;(function () {
-  var messageFile = path.resolve(process.cwd(), '.git/COMMIT_EDITMSG')
+  pkg = fs.existsSync(pkg) && require(pkg) || {}
+  npm = fs.existsSync(npm) && ini.parse(fs.readFileSync(npm, 'utf8')) || {}
+
+  pkg = pkg.commitplease || {}
+  npm = npm.commitplease || {}
+
+  return merge(pkg, npm)
+}
+
+module.exports = function () {
+  var options = getOptions()
+
+  var messageFile = path.join(process.cwd(), '.git', 'COMMIT_EDITMSG')
   var message = sanitize(fs.readFileSync(messageFile, 'utf8').toString())
   var errors = validate(message, options)
   if (errors.length) {
-    console.error('Invalid commit message, please fix the following issues:\n')
+    console.error('Invalid commit message, please fix:\n')
     console.error(chalk.red('- ' + errors.join('\n- ')))
     console.error()
     console.error('Commit message was:')
@@ -30,4 +45,6 @@ var options = fs.existsSync(root) && require(root).commitplease || {}
 
     process.exit(1)
   }
-}())
+}
+
+module.exports.getOptions = getOptions
