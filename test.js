@@ -1,7 +1,8 @@
-var merge = require('mout/object/merge')
 var validate = require('./lib/validate')
 var sanitize = require('./lib/sanitize')
 var defaults = require('./lib/defaults')
+
+var objectAssign = require('object-assign')
 
 var jqueryColon =
     'First line must be <Component>: <subject>\n' +
@@ -31,16 +32,16 @@ var jqueryEmptySubject =
 
 var jquery0 = defaults.jquery
 
-var jquery1 = merge(
-  defaults.jquery, {component: false}
+var jquery1 = objectAssign(
+  {}, defaults.jquery, {component: false}
 )
 
-var jquery2 = merge(
-  defaults.jquery, {components: ['Build', 'Legacy']}
+var jquery2 = objectAssign(
+  {}, defaults.jquery, {components: ['Build', 'Legacy']}
 )
 
-var jquery3 = merge(
-  defaults.jquery, {
+var jquery3 = objectAssign(
+  {}, defaults.jquery, {
     markerPattern: '^((clos|fix|resolv)(e[sd]|ing))|(refs?)',
     ticketPattern: '^((Closes|Fixes) ([a-zA-Z]{2,}-)[0-9]+)|(Refs? [^#])'
   }

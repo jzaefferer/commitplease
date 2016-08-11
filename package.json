@@ -4,7 +4,7 @@
   "description": "Validates strings as commit messages",
   "main": "index.js",
   "bin": {
-    "commitplease": "./index.js"
+    "commitplease": "commitplease.js"
   },
   "scripts": {
     "install": "node install",
@@ -30,15 +30,15 @@
     "babel-cli": "^6.10.1",
     "babel-preset-es2015": "^6.9.0",
     "babel-register": "^6.9.0",
-    "mout": "^0.12.0",
     "nodemon": "^1.9.1",
     "nodeunit": "^0.9.1",
     "standard": "^3.0.0"
   },
   "dependencies": {
     "chalk": "^1.1.1",
+    "git-tools": "^0.2.1",
     "ini": "^1.3.4",
-    "mout": "^0.12.0",
+    "object-assign": "^4.1.0",
     "semver": "^5.1.0"
   }
 }
