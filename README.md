@@ -9,19 +9,26 @@ This [node.js](http://nodejs.org/) module makes sure your git commit messages co
  1. [jQuery Commit Guidelines][1]
  2. [AngularJS Commit Guidelines][2]
 
-You can also start with one of these and customize the validation rules.
+You can also make customized validation rules based on those styles.
 
 ## Installation
 
+Commitplease can be installed locally or globally (or both):
+
+Repo-local install (adds a git hook that runs automatically upon `git commit`):
 ```js
+cd path/to/your/repo
 npm install commitplease --save-dev
+```
+
+Global install (adds a system-wide executable to be run manually):
+```js
+npm install -g commitplease
 ```
 
 A git version of 1.8.5 or newer is recommended. If you use `git commit --verbose`, it is required.
 
 ## Usage
-
-Commit as usual. This module is triggered by a git commit-msg hook and automatically validates your messages as you commit them. Invalid messages will be rejected, with details on what's wrong and a copy of the input.
 
 The following ways to begin a commit message are special and always valid:
 
@@ -32,7 +39,25 @@ The following ways to begin a commit message are special and always valid:
 
 Another special scenario is to do `git commit --no-verify` which will skip the commit-msg hook and bypass commitplease.
 
-Common commit messages follow one of the style guides ([jQuery Commit Guidelines][1] by default)
+Non-special commit messages must follow one of the style guides ([jQuery Commit Guidelines][1] by default)
+
+### Repo-local install
+
+Commit as usual. Git will trigger commitplease to check your commit message for errors. Invalid messages will prevent the commit, with details about what went wrong and a copy of the input.
+
+### Global install
+
+Navigate to your repository and run the global commitplease executable. By default, it will check all the commit messages. Other examples include (just anything you can pass to `git log` really):
+
+| Use case | command |
+|----------|---------|
+| Check all commits on branch `master` | `commitplease master` |
+| Check all commits on branch `feature` that are not on `master` | `commitplease master..feature` |
+| Check the latest 1 commit | `commitplease -1` |
+| Check all commits between `84991d` and `2021ce` | `commitplease 84991d..2021ce` |
+| Check all commits starting with `84991d` | `commitplease 84991d..` |
+
+[Here you can read][4] more about git commit ranges
 
 ## Setup
 
@@ -54,7 +79,7 @@ You can configure commitplease from `package.json` of your project. Here are the
 ```
 
  * `limits.firstLine` and `limits.otherLine` are the hard limits for the number of symbols on the first line and on other lines of the commit message, respectively.
- * `"nohook": false` tells commitplease to attempt to install its own `commit-msg` hook. Setting `"nohook": true` can be used when wrapping the commitplease validation API into another module, like a [grunt plugin](https://github.com/rxaviers/grunt-commitplease/) or [husky](#husky)
+ * `"nohook": false` tells commitplease to install its `commit-msg` hook. Setting `"nohook": true` makes commitplease skip installing the hook or skip running the hook if it has already been installed. This can be used when wrapping the commitplease validation API into another module, like a [grunt plugin](https://github.com/rxaviers/grunt-commitplease/) or [husky](#husky). This setting does not affect the global commitplease executable, only repo-local.
 
 The following options are experimental and are subject to change:
 
@@ -68,7 +93,7 @@ When overwriting these patterns in `package.json`, remember to escape special ch
 
 ### jQuery
 
-Here is how to use and configure validation for [jQuery Commit Guidelines][1]:
+Here is how to configure validation for [jQuery Commit Guidelines][1]:
 
 ```json
 {
@@ -86,7 +111,7 @@ Here is how to use and configure validation for [jQuery Commit Guidelines][1]:
 
 ### AngularJS
 
-Here is how to use and configure validation for [AngularJS Commit Guidelines][2]
+Here is how to configure validation for [AngularJS Commit Guidelines][2]
 
 ```json
 {
@@ -201,3 +226,4 @@ Support this project by [donating on Gratipay](https://gratipay.com/jzaefferer/)
 [1]: http://contribute.jquery.org/commits-and-pull-requests/#commit-guidelines
 [2]: https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#commit
 [3]: https://github.com/typicode/husky
+[4]: https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection#Commit-Ranges
