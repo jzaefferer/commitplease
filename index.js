@@ -58,13 +58,15 @@ module.exports = function () {
       'Examples:\n\n' +
       '1. Check all commits on branch master:\n' +
       'commitplease master\n\n' +
-      '2. Check the latest 1 commit:\n' +
+      '2. Check all commits on branch feature but not on master:\n' +
+      'commitplease master..feature\n\n' +
+      '3. Check the latest 1 commit (n works too):\n' +
       'commitplease -1\n\n' +
-      '3. Check all commits between 84991d and 2021ce\n' +
+      '4. Check all commits between 84991d and 2021ce\n' +
       'commitplease 84991d..2021ce\n\n' +
-      '4. Check all commits starting with 84991d\n' +
+      '5. Check all commits starting with 84991d\n' +
       'commitplease 84991d..\n\n' +
-      'Docs on git commit ranges: bit.ly/commit-range'
+      'Docs on git commit ranges: https://bit.ly/commit-range'
     )
 
     process.exit(0)
