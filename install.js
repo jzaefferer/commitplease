@@ -9,13 +9,28 @@ if (options && options.nohook) {
   process.exit(0)
 }
 
+function xmkdirSync (path, mode) {
+  try {
+    fs.mkdirSync(path, mode)
+  } catch (err) {
+    if (/EPERM/.test(err.message)) {
+      console.error('Failed to create: ' + path)
+      console.error('Make sure you have the necessary permissions')
+      process.exit(1)
+    } else if (/EEXIST/.test(err.message)) {
+      // do nothing
+    } else {
+      console.error(err)
+      process.exit(1)
+    }
+  }
+}
+
 var git = path.resolve(process.cwd(), '..', '..', '.git')
 var hooks = path.join(git, 'hooks')
 
-if (!fs.existsSync(git) || !fs.existsSync(hooks)) {
-  fs.mkdirSync(git)
-  fs.mkdirSync(hooks)
-}
+xmkdirSync(git, parseInt('755', 8))
+xmkdirSync(hooks, parseInt('755', 8))
 
 var dstHook = path.join(hooks, 'commit-msg')
 var srcHook = path.relative(hooks, 'commit-msg-hook.js')
