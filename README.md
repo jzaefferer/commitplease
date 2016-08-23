@@ -28,6 +28,16 @@ npm install -g commitplease
 
 A git version of 1.8.5 or newer is recommended. If you use `git commit --verbose`, it is required.
 
+You could also install a global commitplease executable and put it into a `package.json` script or as a git hook of your choice. Here is an example with a `pre-push` hook:
+
+```
+#!/bin/sh
+
+npm run commitplease --silent
+```
+
+And `chmod +x .git/hooks/pre-push`. Now each time you do a `git push`, the hook will be checking **all** commits on current branch.
+
 ## Usage
 
 The following ways to begin a commit message are special and always valid:
