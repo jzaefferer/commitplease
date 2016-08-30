@@ -18,7 +18,10 @@ function xmkdirSync (path, mode) {
       console.error('Make sure you have the necessary permissions')
       process.exit(1)
     } else if (/EEXIST/.test(err.message)) {
-      // do nothing
+      // do nothing, but this might be a file, not a directory
+    } else if (/ENOTDIR/.test(err.message)) {
+      console.log('Will not install in a git submodule')
+      process.exit(0)
     } else {
       console.error(err)
       process.exit(1)
