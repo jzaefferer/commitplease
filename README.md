@@ -26,7 +26,7 @@ Global install (adds a system-wide executable to be run manually):
 npm install -g commitplease
 ```
 
-A git version of 1.8.5 or newer is recommended. If you use `git commit --verbose`, it is required.
+A git version of 1.8.5 or newer is recommended. If you use `git commit --verbose`, it is required. Also, currently we do not support custom `core.commentchar`, so let us know if you set one.
 
 You could also install a global commitplease executable and put it into a `package.json` script or as a git hook of your choice. Here is an example with a `pre-push` hook:
 
