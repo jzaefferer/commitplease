@@ -223,6 +223,17 @@ var messages0 = [
   },
   {
     msg: 'Component: short message\n\n' +
+         'fixes #1\n' +
+         'fixes #123',
+    reasons: new Map([
+      [jquery3, [
+        'Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: fixes #1',
+        'Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: fixes #123'
+      ]]
+    ])
+  },
+  {
+    msg: 'Component: short message\n\n' +
          'Fixes #1 Fixes #123',
     reasons: new Map([
       [jquery3, [
@@ -285,6 +296,17 @@ var messages0 = [
       [jquery3, [
         'Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: Closes #1',
         'Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: Closes #123'
+      ]]
+    ])
+  },
+  {
+    msg: 'Component: short message\n\n' +
+         'closes #1\n' +
+         'closes #123',
+    reasons: new Map([
+      [jquery3, [
+        'Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: closes #1',
+        'Invalid ticket reference, must be /' + jquery3.ticketPattern + '/\nWas: closes #123'
       ]]
     ])
   },
@@ -405,6 +427,20 @@ var messages0 = [
   {
     msg: 'Component: short message\n\n' +
          'Ref github.com/wiki#link'
+  },
+  {
+    msg: 'Component: short message\n\n' +
+         'Connect #1\n' +
+         'Connect to #1\n' +
+         'Connects to #1\n' +
+         'Connected to #1'
+  },
+  {
+    msg: 'Component: short message\n\n' +
+         'connect #1\n' +
+         'connect to #1\n' +
+         'connects to #1\n' +
+         'connected to #1'
   },
   {
     msg: 'Component: short message\n\n' +
@@ -589,6 +625,30 @@ var messages1 = [
   },
   {
     msg: 'feat(scope1): docs(scope2):'
+  },
+  {
+    msg: 'feat($scope): subject\n\n' +
+         'Closes #1\n' +
+         'Closes #123'
+  },
+  {
+    msg: 'feat($scope): subject\n\n' +
+         'closes #1\n' +
+         'closes #123'
+  },
+  {
+    msg: 'feat($scope): subject\n\n' +
+         'Connect #1\n' +
+         'Connect to #1\n' +
+         'Connects to #1\n' +
+         'Connected to #1'
+  },
+  {
+    msg: 'feat($scope): subject\n\n' +
+         'connect #1\n' +
+         'connect to #1\n' +
+         'connects to #1\n' +
+         'connected to #1'
   },
   {
     msg: 'feat',
