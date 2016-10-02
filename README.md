@@ -118,7 +118,7 @@ Here is how to configure validation for [jQuery Commit Guidelines][1]:
 
  * `"style": "jquery"` selects [jQuery Commit Guidelines][1]
  * `"component": true` requires a component followed by a colon, like `Test:` or `Docs:`
- * `"components": []` is a list of valid components. Example: `"components": ["Test", "Docs"]`. When this list is empty, anything followed by a colon is considered to be a valid component name.
+ * `"components": []` is a list of valid components. Example: `"components": ["Test", "Docs"]`. Members of this list are surrounded by `^` and `$` and are treated as a regular expression. When this list is empty, anything followed by a colon is considered to be a valid component name.
 
 ### AngularJS
 

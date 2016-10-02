@@ -9,26 +9,26 @@ var jqueryColon =
     'Missing colon :'
 var jqueryComponent =
     'First line must be <Component>: <subject>\n' +
-    '<Component> invalid, was "Component", must be one of these:\n' +
-    'Build, Legacy'
+    '<Component> invalid, was "Component", must be one of these:\n'
 var jqueryEmptyComponent =
     'First line must be <Component>: <subject>\n' +
     '<Component> was empty, must be one of these:\n'
 var jqueryTestComponent =
     'First line must be <Component>: <subject>\n' +
-    '<Component> invalid, was "Test", must be one of these:\n' +
-    'Build, Legacy'
+    '<Component> invalid, was "Test", must be one of these:\n'
 var jqueryFixComponent =
     'First line must be <Component>: <subject>\n' +
-    '<Component> invalid, was "[fix]", must be one of these:\n' +
-    'Build, Legacy'
+    '<Component> invalid, was "[fix]", must be one of these:\n'
 var jqueryTmpComponent =
     'First line must be <Component>: <subject>\n' +
-    '<Component> invalid, was "[Tmp]", must be one of these:\n' +
-    'Build, Legacy'
+    '<Component> invalid, was "[Tmp]", must be one of these:\n'
 var jqueryEmptySubject =
     'First line must be <Component>: <subject>\n' +
     '<subject> was empty'
+var jqueryCommitMessageEmpty =
+    'Commit message is empty, abort with error'
+var jqueryFirstLine72 =
+    'First line of commit message must be no longer than 72 characters'
 
 var jquery0 = defaults.jquery
 
@@ -45,6 +45,10 @@ var jquery3 = objectAssign(
     markerPattern: '^((clos|fix|resolv)(e[sd]|ing))|(refs?)',
     ticketPattern: '^((Closes|Fixes) ([a-zA-Z]{2,}-)[0-9]+)|(Refs? [^#])'
   }
+)
+
+var jquery4 = objectAssign(
+  {}, defaults.jquery, {components: ['^\\[\\w+-\\d+\\]']}
 )
 
 var profiles0 = [jquery0, jquery1, jquery3]
@@ -92,7 +96,9 @@ var messages0 = [
     accepts: [jquery1],
     reasons: new Map([
       [jquery0, [jqueryColon]],
-      [jquery3, [jqueryColon]]
+      [jquery2, [jqueryColon]],
+      [jquery3, [jqueryColon]],
+      [jquery4, [jqueryColon]]
     ])
   },
   {
@@ -116,8 +122,15 @@ var messages0 = [
     accepts: [jquery2]
   },
   {
+    msg: '[AB-42]: short message',
+    accepts: [jquery4]
+  },
+  {
     msg: 'Test: short message',
-    reasons: new Map([[jquery2, [jqueryTestComponent]]])
+    reasons: new Map([
+      [jquery2, [jqueryTestComponent + jquery2.components.join(', ')]],
+      [jquery4, [jqueryTestComponent + jquery4.components.join(', ')]]
+    ])
   },
   {
     msg: 'Component: short message\n' +
@@ -129,19 +142,11 @@ var messages0 = [
     msg: 'Component: short message' +
          ' but actually a little bit over default character limit',
     reasons: new Map([
-      [jquery0,
-       ['First line of commit message must be no longer than 72 characters']
-      ],
-      [jquery1,
-       ['First line of commit message must be no longer than 72 characters']
-      ],
-      [jquery2,
-       ['First line of commit message must be no longer than 72 characters',
-        jqueryComponent]
-      ],
-      [jquery3,
-       ['First line of commit message must be no longer than 72 characters']
-      ]
+      [jquery0, [jqueryFirstLine72]],
+      [jquery1, [jqueryFirstLine72]],
+      [jquery2, [jqueryFirstLine72, jqueryComponent + jquery2.components.join(', ')]],
+      [jquery3, [jqueryFirstLine72]],
+      [jquery4, [jqueryFirstLine72, jqueryComponent + jquery4.components.join(', ')]]
     ])
   },
   {
@@ -164,12 +169,29 @@ var messages0 = [
     ])
   },
   {
+    msg: 'Component:',
+    accepts: [jquery1],
+    reasons: new Map([
+      [jquery0, [jqueryEmptySubject]],
+      [jquery3, [jqueryEmptySubject]]
+    ])
+  },
+  {
     msg: 'Build:',
     accepts: [jquery1],
     reasons: new Map([
       [jquery0, [jqueryEmptySubject]],
       [jquery2, [jqueryEmptySubject]],
       [jquery3, [jqueryEmptySubject]]
+    ])
+  },
+  {
+    msg: '[AB-42]:',
+    accepts: [jquery1],
+    reasons: new Map([
+      [jquery0, [jqueryEmptySubject]],
+      [jquery3, [jqueryEmptySubject]],
+      [jquery4, [jqueryEmptySubject]]
     ])
   },
   {
@@ -751,24 +773,27 @@ var messages9 = [
   {
     msg: '[fix]: short message',
     reasons: new Map([
-      [jquery2, [jqueryFixComponent]],
+      [jquery2, [jqueryFixComponent + jquery2.components.join(', ')]],
+      [jquery4, [jqueryFixComponent + jquery4.components.join(', ')]],
       [angular0, [angularOpening]]
     ])
   },
   {
     msg: '[Tmp]: short message',
     reasons: new Map([
-      [jquery2, [jqueryTmpComponent]],
+      [jquery2, [jqueryTmpComponent + jquery2.components.join(', ')]],
+      [jquery4, [jqueryTmpComponent + jquery4.components.join(', ')]],
       [angular0, [angularOpening]]
     ])
   },
   {
     msg: '',
     reasons: new Map([
-      [jquery0, ['Commit message is empty, abort with error']],
-      [jquery1, ['Commit message is empty, abort with error']],
-      [jquery2, ['Commit message is empty, abort with error']],
-      [jquery3, ['Commit message is empty, abort with error']],
+      [jquery0, [jqueryCommitMessageEmpty]],
+      [jquery1, [jqueryCommitMessageEmpty]],
+      [jquery2, [jqueryCommitMessageEmpty]],
+      [jquery3, [jqueryCommitMessageEmpty]],
+      [jquery4, [jqueryCommitMessageEmpty]],
       [angular0, ['Commit message is empty, abort with error']]
     ])
   }
