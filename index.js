@@ -75,7 +75,7 @@ module.exports = function () {
   var options = getOptions()
   var message = path.join('.git', 'COMMIT_EDITMSG')
 
-  if (argv[0] === message) {
+  if (path.normalize(argv[0]) === message) {
     runValidate(fs.readFileSync(message, 'utf8').toString(), options)
 
     process.exit(0)
