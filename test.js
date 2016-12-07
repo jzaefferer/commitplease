@@ -42,8 +42,8 @@ var jquery2 = objectAssign(
 
 var jquery3 = objectAssign(
   {}, defaults.jquery, {
-    markerPattern: '^((clos|fix|resolv)(e[sd]|ing))|(refs?)',
-    ticketPattern: '^((Closes|Fixes) ([a-zA-Z]{2,}-)[0-9]+)|(Refs? [^#])'
+    markerPattern: '^((clos|fix|resolv)(e[sd]|ing))|^(refs?)',
+    ticketPattern: '^((Closes|Fixes) ([a-zA-Z]{2,}-)[0-9]+)|^(Refs? [^#])'
   }
 )
 
@@ -65,6 +65,11 @@ var messages0 = [
     msg: 'Component: short message\n\n' +
          'Long description\n\n' +
          'That spans many paragraphs'
+  },
+  {
+    msg: 'Component: must not trigger false positives\n\n' +
+         'This fixes a reference to reformat a fix\n' +
+         'This closes a fix to reformat a reference'
   },
   {
     msg: 'Component: short message\n' +
