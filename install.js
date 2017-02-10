@@ -35,26 +35,47 @@ var hooks = path.join(git, 'hooks')
 xmkdirSync(git, parseInt('755', 8))
 xmkdirSync(hooks, parseInt('755', 8))
 
-var dstHook = path.join(hooks, 'commit-msg')
-var srcHook = path.relative(hooks, 'commit-msg-hook.js')
+var dstCommitHook = path.join(hooks, 'commit-msg')
+var srcCommitHook = path.relative(hooks, 'commit-msg-hook.js')
 
-if (fs.existsSync(dstHook)) {
-  console.log(chalk.red('A commit-msg hook already exists'))
-  console.log(chalk.red('Remove it and install this package again to install commitplease properly'))
-  process.exit(0)
+var dstPrepareHook = path.join(hooks, 'prepare-commit-msg')
+var srcPrepareHook = path.relative(hooks, 'prepare-commit-msg-hook.js')
+
+var dstHooks = [dstCommitHook, dstPrepareHook]
+var srcHooks = [srcCommitHook, srcPrepareHook]
+
+// loop twice, try to avoid getting partially installed
+
+var i, dstHook, srcHook
+
+for (i = 0; i < dstHooks.length; ++i) {
+  dstHook = dstHooks[i]
+
+  if (fs.existsSync(dstHook)) {
+    console.log(chalk.red('The following hook already exists:\n' + dstHook))
+    console.log(chalk.red('Remove it and install this package again to install commitplease properly'))
+
+    process.exit(0)
+  }
 }
 
-try {
-  fs.writeFileSync(dstHook, fs.readFileSync(srcHook))
-  fs.chmodSync(dstHook, '755')
-} catch (e) {
-  if (/EPERM/.test(e.message)) {
-    console.error(
-      chalk.red(
-        'Failed to write commit-msg hook. ' +
-        'Make sure you have the necessary permissions.'
+for (i = 0; i < dstHooks.length; ++i) {
+  dstHook = dstHooks[i]
+  srcHook = srcHooks[i]
+
+  try {
+    fs.writeFileSync(dstHook, fs.readFileSync(srcHook))
+    fs.chmodSync(dstHook, '755')
+  } catch (e) {
+    if (/EPERM/.test(e.message)) {
+      console.error(
+        chalk.red(
+          'Failed to write to ' + dstHook +
+          '\nMake sure you have the necessary permissions.'
+        )
       )
-    )
+    }
+
+    throw e
   }
-  throw e
 }

@@ -8,6 +8,7 @@ var objectAssign = require('object-assign')
 
 var validate = require('./lib/validate')
 var sanitize = require('./lib/sanitize')
+var defaults = require('./lib/defaults')
 
 function getOptions () {
   var pkg = path.join(process.cwd(), 'package.json')
@@ -38,6 +39,9 @@ function runValidate (message, options) {
     } else if (options.style === 'angular') {
       console.error('\nSee https://bit.ly/angular-guidelines')
     }
+
+    // save a poorly formatted message and reuse it at a later commit
+    fs.writeFileSync(defaults.oldMessagePath, message)
 
     process.exit(1)
   }
@@ -106,4 +110,5 @@ module.exports = function () {
   })
 }
 
+module.exports.defaults = defaults
 module.exports.getOptions = getOptions
