@@ -20,7 +20,27 @@ function getOptions () {
   pkg = pkg.commitplease || {}
   npm = npm.commitplease || {}
 
-  return objectAssign(pkg, npm)
+  var options = objectAssign(pkg, npm)
+
+  var base = {
+    'oldMessagePath': defaults.oldMessagePath,
+    'oldMessageSeconds': defaults.oldMessageSeconds
+  }
+
+  if (options === undefined ||
+      options.style === undefined ||
+      options.style === 'jquery') {
+    return objectAssign(base, defaults.jquery, options)
+  } else if (options.style === 'angular') {
+    return objectAssign(base, defaults.angular, options)
+  }
+
+  console.error(chalk.red(
+    'Style ' + options.style + ' is not recognised\n' +
+    'Did you mistype it in package.json?'
+  ))
+
+  process.exit(1)
 }
 
 function runValidate (message, options) {
