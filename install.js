@@ -46,22 +46,17 @@ var srcHooks = [srcCommitHook, srcPrepareHook]
 
 // loop twice, try to avoid getting partially installed
 
-var i, dstHook, srcHook
-
-for (i = 0; i < dstHooks.length; ++i) {
-  dstHook = dstHooks[i]
-
+dstHooks.forEach(function (dstHook) {
   if (fs.existsSync(dstHook)) {
     console.log(chalk.red('The following hook already exists:\n' + dstHook))
     console.log(chalk.red('Remove it and install this package again to install commitplease properly'))
 
     process.exit(0)
   }
-}
+})
 
-for (i = 0; i < dstHooks.length; ++i) {
-  dstHook = dstHooks[i]
-  srcHook = srcHooks[i]
+dstHooks.forEach(function (dstHook, i) {
+  var srcHook = srcHooks[i]
 
   try {
     fs.writeFileSync(dstHook, fs.readFileSync(srcHook))
@@ -78,4 +73,4 @@ for (i = 0; i < dstHooks.length; ++i) {
 
     throw e
   }
-}
+})
