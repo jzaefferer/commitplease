@@ -15,11 +15,9 @@ if (fs.existsSync(oldMessagePath)) {
 
   var mtime = new Date(fs.statSync(oldMessagePath).mtime)
 
-  // Date.now() - mtime.getTime() is milliseconds, convert to minutes
+  // Date.now() - mtime.getTime() is milliseconds, convert to seconds
   if ((Date.now() - mtime.getTime()) / 1000 < oldMessageSeconds) {
-    fs.writeFileSync(
-      process.argv[2], fs.readFileSync(oldMessagePath).toString()
-    )
+    fs.writeFileSync(process.argv[2], fs.readFileSync(oldMessagePath))
   }
 
   fs.unlinkSync(oldMessagePath)
