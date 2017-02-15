@@ -28,3 +28,17 @@ for (var i = 0; i < dstHooks.length; ++i) {
     }
   }
 }
+
+try {
+  var options = require('commitplease').getOptions()
+
+  var oldMessagePath = path.join(
+    process.cwd(), '..', '..', options.oldMessagePath
+  )
+
+  fs.unlinkSync(oldMessagePath)
+} catch (err) {
+  if (!/ENOENT/.test(err.message)) {
+    throw err
+  }
+}
