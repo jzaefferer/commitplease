@@ -15,7 +15,18 @@ try {
   var mtime = new Date(fs.statSync(oldMessagePath).mtime)
 
   // Date.now() - mtime.getTime() is milliseconds, convert to seconds
-  if ((Date.now() - mtime.getTime()) / 1000 < oldMessageSeconds) {
+  var fresh = (Date.now() - mtime.getTime()) / 1000 < oldMessageSeconds
+
+  // There are many scenarios that trigger the prepare-commit-msg hook
+  // These scenarios pass different console parameters, see here:
+  // https://www.kernel.org/pub/software/scm/git/docs/githooks.html
+  //
+  // A plain `git commit` is the only scenario that passes 3 entries
+  // For all other scenarios (like `git commit -m`, squash or merge)
+  // just delete oldMessagePath, do not actually suggest it to user
+  var plain = process.argv === 3
+
+  if (plain && fresh) {
     fs.writeFileSync(process.argv[2], fs.readFileSync(oldMessagePath))
   }
 
