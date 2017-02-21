@@ -117,7 +117,20 @@ module.exports = function () {
 
   repo.exec('log', format, committish, function (error, messages) {
     if (error) {
+      if (/Not a git repository/.test(error.message)) {
+        console.log(error.message)
+
+        process.exit(0)
+      }
+
+      if (/does not have any commits yet/.test(error.message)) {
+        console.log(error.message)
+
+        process.exit(0)
+      }
+
       console.error(error)
+
       process.exit(1)
     }
 
