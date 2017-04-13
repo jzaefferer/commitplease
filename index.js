@@ -54,11 +54,7 @@ function runValidate (message, options) {
     console.error()
     console.error(chalk.green(sanitize(message)))
 
-    if (options.style === undefined || options.style === 'jquery') {
-      console.error('\nSee https://bit.ly/jquery-guidelines')
-    } else if (options.style === 'angular') {
-      console.error('\nSee https://bit.ly/angular-guidelines')
-    }
+    console.error('\nSee ' + options.guidelinesUrl)
 
     // save a poorly formatted message and reuse it at a later commit
     fs.writeFileSync(defaults.oldMessagePath, message)
