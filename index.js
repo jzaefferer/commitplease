@@ -10,9 +10,37 @@ var validate = require('./lib/validate')
 var sanitize = require('./lib/sanitize')
 var defaults = require('./lib/defaults')
 
+// Need to find the path to the project that is installing
+// commitplease. Previously, process.cwd() made the job easy but its
+// output changed with node v8.1.2
+function getProjectPath () {
+  // Use the fact that npm will inject a path that ends with
+  // commitplease/node_modules/.bin into PATH
+  var p = process.env.PATH.split(':').filter(
+    function (p) {
+      return p.endsWith(path.join('commitplease', 'node_modules', '.bin'))
+    }
+  )
+
+  if (p.length !== 1) {
+    console.error(chalk.red('Failed to find project path\n'))
+  }
+
+  // Removing suffix node_modules/commitplease/node_modules/.bin will
+  // give the absolute path to the project root
+  p = p[0].split(path.sep)
+  p = p.slice(0, p.length - 4)
+
+  return path.sep + p.join(path.sep)
+}
+
 function getOptions () {
-  var pkg = path.join(process.cwd(), 'package.json')
-  var npm = path.join(process.cwd(), '.npmrc')
+  var projectPath = getProjectPath()
+
+  console.log(projectPath)
+
+  var pkg = path.join(projectPath, 'package.json')
+  var npm = path.join(projectPath, '.npmrc')
 
   pkg = fs.existsSync(pkg) && require(pkg) || {}
   npm = fs.existsSync(npm) && ini.parse(fs.readFileSync(npm, 'utf8')) || {}
