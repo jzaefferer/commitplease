@@ -4,6 +4,7 @@ var path = require('path')
 var chalk = require('chalk')
 var Git = require('git-tools')
 
+var endsWith = require('ends-with')
 var objectAssign = require('object-assign')
 
 var validate = require('./lib/validate')
@@ -12,18 +13,21 @@ var defaults = require('./lib/defaults')
 
 // Need to find the path to the project that is installing
 // commitplease. Previously, process.cwd() made the job easy but its
-// output changed with node v8.1.2
+// output changed with node v8.1.2 (at least compared to 7.10.0)
 function getProjectPath () {
   // Use the fact that npm will inject a path that ends with
-  // commitplease/node_modules/.bin into PATH
+  // commitplease/node_modules/.bin into process.env.PATH
   var p = process.env.PATH.split(':').filter(
     function (p) {
-      return p.endsWith(path.join('commitplease', 'node_modules', '.bin'))
+      return endsWith(p, path.join('commitplease', 'node_modules', '.bin'))
     }
   )
 
   if (p.length !== 1) {
     console.error(chalk.red('Failed to find project path\n'))
+
+    // Just leave with zero so as not to interrupt install
+    process.exit(0)
   }
 
   // Removing suffix node_modules/commitplease/node_modules/.bin will
@@ -36,8 +40,6 @@ function getProjectPath () {
 
 function getOptions () {
   var projectPath = getProjectPath()
-
-  console.log(projectPath)
 
   var pkg = path.join(projectPath, 'package.json')
   var npm = path.join(projectPath, '.npmrc')
