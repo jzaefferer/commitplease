@@ -1,6 +1,6 @@
 sudo: false
 language: node_js
 node_js:
-  - '0.12' # Legacy
-  - '4' # LTS
+  - '4' # LTS Argon
+  - '6' # LTS Boron
   - 'stable'
