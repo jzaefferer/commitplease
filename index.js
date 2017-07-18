@@ -23,11 +23,11 @@ function sliceEnvPath (suffix) {
   return undefined
 }
 
-// Need to find the path to the project that is installing
+// Need to find the path to the project that is installing or running
 // commitplease. Previously, process.cwd() made the job easy but its
 // output changed with node v8.1.2 (at least compared to 7.10.0)
 function getProjectPath () {
-  // Use the fact that npm will inject a path that ends with
+  // During npm install, npm will inject a path that ends with
   // commitplease/node_modules/.bin into process.env.PATH
   var p = sliceEnvPath(
     path.join('node_modules', 'commitplease', 'node_modules', '.bin')
@@ -37,15 +37,19 @@ function getProjectPath () {
     return p
   }
 
-  // Try a less specific suffix:
+  // During npm run, npm will inject a path that ends with
+  // node_modules/.bin into process.env.PATH
   p = sliceEnvPath(path.join('node_modules', '.bin'))
 
   if (p !== undefined) {
     return p
   }
 
-  console.error(chalk.red('Could not find project path'))
-  process.exit(0)
+  // During git commit there will be no process.env.PATH modifications
+  // So, assume we are being run by git which will set process.cwd()
+  // to the root of the project as described in the manual:
+  // https://git-scm.com/docs/githooks/2.9.0
+  return process.cwd()
 }
 
 function getOptions () {
@@ -63,6 +67,7 @@ function getOptions () {
   var options = Object.assign(pkg, npm)
 
   var base = {
+    'projectPath': projectPath,
     'oldMessagePath': defaults.oldMessagePath,
     'oldMessageSeconds': defaults.oldMessageSeconds
   }
