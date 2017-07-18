@@ -4,8 +4,17 @@ var chalk = require('chalk')
 
 var options = require('./index.js').getOptions()
 
-if (options && options.nohook) {
-  console.log('commitplease: package.json or .npmrc set to skip hook')
+// Is this a self-install? If so, do not copy hooks and quit early
+var pkgPath = path.join(options.projectPath, 'package.json')
+var pkg = fs.existsSync(pkgPath) && require(pkgPath)
+
+if (pkg && pkg.name && pkg.name === 'commitplease') {
+  console.log('commitplease: self-install detected, skipping hooks')
+  process.exit(0)
+}
+
+if (options.nohook) {
+  console.log('commitplease: package.json or .npmrc set to skip hooks')
   process.exit(0)
 }
 
