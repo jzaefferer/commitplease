@@ -2,8 +2,6 @@ var validate = require('./lib/validate')
 var sanitize = require('./lib/sanitize')
 var defaults = require('./lib/defaults')
 
-var objectAssign = require('object-assign')
-
 var jqueryColon =
     'First line must be <Component>: <subject>\n' +
     'Missing colon :'
@@ -32,22 +30,22 @@ var jqueryFirstLine72 =
 
 var jquery0 = defaults.jquery
 
-var jquery1 = objectAssign(
+var jquery1 = Object.assign(
   {}, defaults.jquery, {component: false}
 )
 
-var jquery2 = objectAssign(
+var jquery2 = Object.assign(
   {}, defaults.jquery, {components: ['Build', 'Legacy']}
 )
 
-var jquery3 = objectAssign(
+var jquery3 = Object.assign(
   {}, defaults.jquery, {
     markerPattern: '^((clos|fix|resolv)(e[sd]|ing))|^(refs?)',
     ticketPattern: '^((Closes|Fixes) ([a-zA-Z]{2,}-)[0-9]+)|^(Refs? [^#])'
   }
 )
 
-var jquery4 = objectAssign(
+var jquery4 = Object.assign(
   {}, defaults.jquery, {components: ['^\\[\\w+-\\d+\\]']}
 )
 

@@ -4,16 +4,13 @@ var path = require('path')
 var chalk = require('chalk')
 var Git = require('git-tools')
 
-var endsWith = require('ends-with')
-var objectAssign = require('object-assign')
-
 var validate = require('./lib/validate')
 var sanitize = require('./lib/sanitize')
 var defaults = require('./lib/defaults')
 
 function sliceEnvPath (suffix) {
   var p = process.env.PATH.split(':').filter(
-    function (p) {return endsWith(p, suffix)}
+    function (p) {return p.endsWith(suffix)}
   )
 
   if (p.length === 1) {
@@ -63,7 +60,7 @@ function getOptions () {
   pkg = pkg.commitplease || {}
   npm = npm.commitplease || {}
 
-  var options = objectAssign(pkg, npm)
+  var options = Object.assign(pkg, npm)
 
   var base = {
     'oldMessagePath': defaults.oldMessagePath,
@@ -73,9 +70,9 @@ function getOptions () {
   if (options === undefined ||
       options.style === undefined ||
       options.style === 'jquery') {
-    return objectAssign(base, defaults.jquery, options)
+    return Object.assign(base, defaults.jquery, options)
   } else if (options.style === 'angular') {
-    return objectAssign(base, defaults.angular, options)
+    return Object.assign(base, defaults.angular, options)
   }
 
   console.error(chalk.red(
