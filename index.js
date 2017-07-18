@@ -8,6 +8,9 @@ var validate = require('./lib/validate')
 var sanitize = require('./lib/sanitize')
 var defaults = require('./lib/defaults')
 
+// If there is a path in process.env.PATH that looks like this:
+// path = prefix + suffix (where suffix is the function argument)
+// then slice off the suffix and return the prefix, otherwise undefiend
 function sliceEnvPath (suffix) {
   var p = process.env.PATH.split(':').filter(
     function (p) {return p.endsWith(suffix)}
