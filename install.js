@@ -29,17 +29,19 @@ function xmkdirSync (path, mode) {
   }
 }
 
-var git = path.resolve(process.cwd(), '..', '..', '.git')
-var hooks = path.join(git, 'hooks')
+var git = path.join(options.projectPath, '.git')
+
+var dstHooksPath = path.join(options.projectPath, '.git', 'hooks')
+var srcHooksPath = path.join(options.projectPath, 'node_modules', 'commitplease')
 
 xmkdirSync(git, parseInt('755', 8))
-xmkdirSync(hooks, parseInt('755', 8))
+xmkdirSync(dstHooksPath, parseInt('755', 8))
 
-var dstCommitHook = path.join(hooks, 'commit-msg')
-var srcCommitHook = path.relative(hooks, 'commit-msg-hook.js')
+var dstCommitHook = path.join(dstHooksPath, 'commit-msg')
+var srcCommitHook = path.join(srcHooksPath, 'commit-msg-hook.js')
 
-var dstPrepareHook = path.join(hooks, 'prepare-commit-msg')
-var srcPrepareHook = path.relative(hooks, 'prepare-commit-msg-hook.js')
+var dstPrepareHook = path.join(dstHooksPath, 'prepare-commit-msg')
+var srcPrepareHook = path.join(srcHooksPath, 'prepare-commit-msg-hook.js')
 
 var dstHooks = [dstCommitHook, dstPrepareHook]
 var srcHooks = [srcCommitHook, srcPrepareHook]
