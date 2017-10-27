@@ -156,7 +156,7 @@ When using commitplease together with [husky][3], the following will let husky m
 ```json
 {
   "scripts": {
-    "commitmsg": "commitplease"
+    "commitmsg": "commitplease .git/COMMIT_EDITMSG"
   },
   "commitplease": {
     "nohook": true
@@ -164,7 +164,7 @@ When using commitplease together with [husky][3], the following will let husky m
 }
 ```
 
-However, since husky does not use npm in silent mode (and there is [no easy way](https://github.com/typicode/husky/pull/47) to make it [do so](https://github.com/npm/npm/issues/5452)), there will be a lot of additional output when a message fails validation. Therefore, using commitplease alone is recommended.
+However, since husky does not use npm in silent mode (and there is [no easy way](https://github.com/typicode/husky/pull/47) to make it [do so](https://github.com/npm/npm/issues/5452)), there will be a lot of additional output when a message fails validation. Moreover, husky will run your `scripts` entry and nothing more, so you have to [specify everything yourself](https://github.com/jzaefferer/commitplease/issues/100) (e.g. the path to the commit message file). Therefore, using commitplease alone is recommended.
 
 ## API
 
