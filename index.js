@@ -30,6 +30,9 @@ function sliceEnvPath (suffix) {
 // commitplease. Previously, process.cwd() made the job easy but its
 // output changed with node v8.1.2 (at least compared to 7.10.0)
 function getProjectPath () {
+  // Rely on npm to inject some path into PATH; However, the injected
+  // path can both be relative or absolute, so add extra path.resolve()
+
   // During npm install, npm will inject a path that ends with
   // commitplease/node_modules/.bin into process.env.PATH
   var p = sliceEnvPath(
@@ -37,7 +40,7 @@ function getProjectPath () {
   )
 
   if (p !== undefined) {
-    return p
+    return path.resolve(p)
   }
 
   // During npm run, npm will inject a path that ends with
@@ -45,14 +48,14 @@ function getProjectPath () {
   p = sliceEnvPath(path.join('node_modules', '.bin'))
 
   if (p !== undefined) {
-    return p
+    return path.resolve(p)
   }
 
   // During git commit there will be no process.env.PATH modifications
   // So, assume we are being run by git which will set process.cwd()
   // to the root of the project as described in the manual:
   // https://git-scm.com/docs/githooks/2.9.0
-  return process.cwd()
+  return path.resolve(process.cwd())
 }
 
 function getOptions () {
