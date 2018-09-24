@@ -244,6 +244,6 @@ Released under the terms of the MIT license.
 Support this project by [donating on Gratipay](https://gratipay.com/jzaefferer/).
 
 [1]: http://contribute.jquery.org/commits-and-pull-requests/#commit-guidelines
-[2]: https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#commit
+[2]: https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#commits
 [3]: https://github.com/typicode/husky
 [4]: https://git-scm.com/book/en/v2/Git-Tools-Revision-Selection#Commit-Ranges
