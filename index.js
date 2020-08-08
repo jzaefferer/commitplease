@@ -58,6 +58,24 @@ function getProjectPath () {
   return path.resolve(process.cwd())
 }
 
+function getOverrides (env) {
+  var options = {}
+  var prefix = 'npm_config_commitplease_'
+  for (var key in env) {
+
+    // For explicit environment variable overrides.
+    // npm also sets these implicitly for CLI arguments (--commitplease-*),
+    // and for commitplease_* prefixed entries in an .npmrc file.
+    // Note that getOptions() has its own handling for npmrc files, because
+    // we prefer entries to be in their own [commitplease] section,
+    // which npm does not add individually into process.env.
+    if (key.indexOf(prefix) !== -1) {
+      options[key.replace(prefix, '')] = env[key]
+    }
+  }
+  return options
+}
+
 function getOptions () {
   var projectPath = getProjectPath()
 
@@ -70,7 +88,9 @@ function getOptions () {
   pkg = pkg.commitplease || {}
   npm = npm.commitplease || {}
 
-  var options = Object.assign(pkg, npm)
+  var overrides = getOverrides(process.env)
+
+  var options = Object.assign(pkg, npm, overrides)
 
   var base = {
     'projectPath': projectPath,
